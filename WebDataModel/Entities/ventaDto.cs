@@ -223,7 +223,8 @@ namespace WebDataModel.Entities
         
         public Nullable<Int32> i_IdTipoNota { get; set; }
 
-        
+        public Nullable<Int16> i_EsGratuito { get; set; }
+
         public List<String> ventadetalle_v_IdVentaDetalle { get; set; }
 
         
@@ -231,82 +232,6 @@ namespace WebDataModel.Entities
 
         public ventaDto()
         {
-        }
-
-        public ventaDto(String v_IdVenta, String v_IdFormatoUnicoFacturacion, String v_Periodo, String v_Mes, String v_Correlativo, Nullable<Int32> i_IdIgv, Nullable<Int32> i_IdTipoDocumento, String v_SerieDocumento, String v_CorrelativoDocumento, String v_CorrelativoDocumentoFin, Nullable<Int32> i_IdTipoDocumentoRef, String v_SerieDocumentoRef, String v_CorrelativoDocumentoRef, Nullable<DateTime> t_FechaRef, String v_IdCliente, String v_NombreClienteTemporal, String v_DireccionClienteTemporal, Nullable<DateTime> t_FechaRegistro, Nullable<Decimal> d_TipoCambio, Nullable<Int32> i_NroDias, Nullable<DateTime> t_FechaVencimiento, Nullable<Int32> i_IdCondicionPago, String v_Concepto, Nullable<Int32> i_IdMoneda, Nullable<Int32> i_IdEstado, Nullable<Int32> i_EsAfectoIgv, Nullable<Int32> i_PreciosIncluyenIgv, String v_IdVendedor, String v_IdVendedorRef, Nullable<Decimal> d_PorcDescuento, Nullable<Decimal> d_PocComision, Nullable<Decimal> d_ValorFOB, Nullable<Int32> i_DeduccionAnticipio, String v_NroPedido, String v_NroGuiaRemisionSerie, String v_NroGuiaRemisionCorrelativo, String v_OrdenCompra, Nullable<DateTime> t_FechaOrdenCompra, Nullable<Int32> i_IdTipoVenta, Nullable<Int32> i_IdTipoOperacion, Nullable<Int32> i_IdEstablecimiento, Nullable<Int32> i_IdPuntoEmbarque, Nullable<Int32> i_IdPuntoDestino, Nullable<Int32> i_IdTipoEmbarque, Nullable<Int32> i_IdMedioPagoVenta, String v_Marca, Nullable<Int32> i_DrawBack, String v_NroBulto, String v_BultoDimensiones, Nullable<Decimal> d_PesoBrutoKG, Nullable<Decimal> d_PesoNetoKG, Nullable<Decimal> d_Valor, Nullable<Decimal> d_ValorVenta, Nullable<Decimal> d_Descuento, Nullable<Decimal> d_Percepcion, Nullable<Decimal> d_Anticipio, Nullable<Decimal> d_IGV, Nullable<Decimal> d_Total, Nullable<Decimal> d_total_isc, Nullable<Decimal> d_total_otrostributos, String v_PlacaVehiculo, String v_IdTipoKardex, Nullable<Int32> i_Impresion, Nullable<Int32> i_Eliminado, Nullable<Int32> i_InsertaIdUsuario, Nullable<DateTime> t_InsertaFecha, Nullable<Int32> i_ActualizaIdUsuario, Nullable<DateTime> t_ActualizaFecha, Nullable<Int16> i_EstadoSunat, Nullable<Int32> i_IdTipoNota, List<String> ventadetalle_v_IdVentaDetalle, List<Int32> ventahomolagacion_i_IdVentaHomologacion)
-        {
-			this.v_IdVenta = v_IdVenta;
-			this.v_IdFormatoUnicoFacturacion = v_IdFormatoUnicoFacturacion;
-			this.v_Periodo = v_Periodo;
-			this.v_Mes = v_Mes;
-			this.v_Correlativo = v_Correlativo;
-			this.i_IdIgv = i_IdIgv;
-			this.i_IdTipoDocumento = i_IdTipoDocumento;
-			this.v_SerieDocumento = v_SerieDocumento;
-			this.v_CorrelativoDocumento = v_CorrelativoDocumento;
-			this.v_CorrelativoDocumentoFin = v_CorrelativoDocumentoFin;
-			this.i_IdTipoDocumentoRef = i_IdTipoDocumentoRef;
-			this.v_SerieDocumentoRef = v_SerieDocumentoRef;
-			this.v_CorrelativoDocumentoRef = v_CorrelativoDocumentoRef;
-			this.t_FechaRef = t_FechaRef;
-			this.v_IdCliente = v_IdCliente;
-			this.v_NombreClienteTemporal = v_NombreClienteTemporal;
-			this.v_DireccionClienteTemporal = v_DireccionClienteTemporal;
-			this.t_FechaRegistro = t_FechaRegistro;
-			this.d_TipoCambio = d_TipoCambio;
-			this.i_NroDias = i_NroDias;
-			this.t_FechaVencimiento = t_FechaVencimiento;
-			this.i_IdCondicionPago = i_IdCondicionPago;
-			this.v_Concepto = v_Concepto;
-			this.i_IdMoneda = i_IdMoneda;
-			this.i_IdEstado = i_IdEstado;
-			this.i_EsAfectoIgv = i_EsAfectoIgv;
-			this.i_PreciosIncluyenIgv = i_PreciosIncluyenIgv;
-			this.v_IdVendedor = v_IdVendedor;
-			this.v_IdVendedorRef = v_IdVendedorRef;
-			this.d_PorcDescuento = d_PorcDescuento;
-			this.d_PocComision = d_PocComision;
-			this.d_ValorFOB = d_ValorFOB;
-			this.i_DeduccionAnticipio = i_DeduccionAnticipio;
-			this.v_NroPedido = v_NroPedido;
-			this.v_NroGuiaRemisionSerie = v_NroGuiaRemisionSerie;
-			this.v_NroGuiaRemisionCorrelativo = v_NroGuiaRemisionCorrelativo;
-			this.v_OrdenCompra = v_OrdenCompra;
-			this.t_FechaOrdenCompra = t_FechaOrdenCompra;
-			this.i_IdTipoVenta = i_IdTipoVenta;
-			this.i_IdTipoOperacion = i_IdTipoOperacion;
-			this.i_IdEstablecimiento = i_IdEstablecimiento;
-			this.i_IdPuntoEmbarque = i_IdPuntoEmbarque;
-			this.i_IdPuntoDestino = i_IdPuntoDestino;
-			this.i_IdTipoEmbarque = i_IdTipoEmbarque;
-			this.i_IdMedioPagoVenta = i_IdMedioPagoVenta;
-			this.v_Marca = v_Marca;
-			this.i_DrawBack = i_DrawBack;
-			this.v_NroBulto = v_NroBulto;
-			this.v_BultoDimensiones = v_BultoDimensiones;
-			this.d_PesoBrutoKG = d_PesoBrutoKG;
-			this.d_PesoNetoKG = d_PesoNetoKG;
-			this.d_Valor = d_Valor;
-			this.d_ValorVenta = d_ValorVenta;
-			this.d_Descuento = d_Descuento;
-			this.d_Percepcion = d_Percepcion;
-			this.d_Anticipio = d_Anticipio;
-			this.d_IGV = d_IGV;
-			this.d_Total = d_Total;
-			this.d_total_isc = d_total_isc;
-			this.d_total_otrostributos = d_total_otrostributos;
-			this.v_PlacaVehiculo = v_PlacaVehiculo;
-			this.v_IdTipoKardex = v_IdTipoKardex;
-			this.i_Impresion = i_Impresion;
-			this.i_Eliminado = i_Eliminado;
-			this.i_InsertaIdUsuario = i_InsertaIdUsuario;
-			this.t_InsertaFecha = t_InsertaFecha;
-			this.i_ActualizaIdUsuario = i_ActualizaIdUsuario;
-			this.t_ActualizaFecha = t_ActualizaFecha;
-			this.i_EstadoSunat = i_EstadoSunat;
-			this.i_IdTipoNota = i_IdTipoNota;
-			this.ventadetalle_v_IdVentaDetalle = ventadetalle_v_IdVentaDetalle;
-			this.ventahomolagacion_i_IdVentaHomologacion = ventahomolagacion_i_IdVentaHomologacion;
         }
     }
 }

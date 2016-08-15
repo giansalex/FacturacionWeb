@@ -177,6 +177,10 @@
       <Project>{a649ff05-7937-4922-bb1f-7fcbe6308b3d}</Project>
       <Name>WebDataModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebDocs\WebDocs.csproj">
+      <Project>{b5387864-bb9f-4b49-a8af-2b375e8dcf7c}</Project>
+      <Name>WebDocs</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

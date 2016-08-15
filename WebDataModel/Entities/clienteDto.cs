@@ -96,48 +96,5 @@ namespace WebDataModel.Entities
         public clienteDto()
         {
         }
-
-        public clienteDto(string v_IdCliente, string v_IdVendedor, string v_CodCliente, string v_FlagPantalla, int? i_IdTipoIdentificacion, string v_NroDocIdentificacion, int? i_IdTipoPersona, string v_PrimerNombre, string v_SegundoNombre, string v_ApePaterno, string v_ApeMaterno, string v_RazonSocial, int? i_IdSexo, string v_DirecPrincipal, int? i_IdPais, int? i_IdDepartamento, int? i_IdProvincia, int? i_IdDistrito, string v_DirecSecundaria, string v_TelefonoFijo, string v_TelefonoFax, string v_TelefonoMovil, string v_Correo, string v_PaginaWeb, int? i_Activo, DateTime? t_FechaNacimiento, int? i_Nacionalidad, string v_NombreContacto, int? i_IdGrupoCliente, int? i_IdListaPrecios, int? i_IdZona, int? i_EsPrestadorServicios, string v_Servicio, int? i_IdConvenioDobleTributacion, int? i_AfectoDetraccion, int? i_UsaLineaCredito, int? i_Eliminado, string v_NroCuentaDetraccion, DateTime? t_InsertaFecha)
-        {
-			this.v_IdCliente = v_IdCliente;
-			this.v_IdVendedor = v_IdVendedor;
-			this.v_CodCliente = v_CodCliente;
-			this.v_FlagPantalla = v_FlagPantalla;
-			this.i_IdTipoIdentificacion = i_IdTipoIdentificacion;
-			this.v_NroDocIdentificacion = v_NroDocIdentificacion;
-			this.i_IdTipoPersona = i_IdTipoPersona;
-			this.v_PrimerNombre = v_PrimerNombre;
-			this.v_SegundoNombre = v_SegundoNombre;
-			this.v_ApePaterno = v_ApePaterno;
-			this.v_ApeMaterno = v_ApeMaterno;
-			this.v_RazonSocial = v_RazonSocial;
-			this.i_IdSexo = i_IdSexo;
-			this.v_DirecPrincipal = v_DirecPrincipal;
-			this.i_IdPais = i_IdPais;
-			this.i_IdDepartamento = i_IdDepartamento;
-			this.i_IdProvincia = i_IdProvincia;
-			this.i_IdDistrito = i_IdDistrito;
-			this.v_DirecSecundaria = v_DirecSecundaria;
-			this.v_TelefonoFijo = v_TelefonoFijo;
-			this.v_TelefonoFax = v_TelefonoFax;
-			this.v_TelefonoMovil = v_TelefonoMovil;
-			this.v_Correo = v_Correo;
-			this.v_PaginaWeb = v_PaginaWeb;
-			this.i_Activo = i_Activo;
-			this.t_FechaNacimiento = t_FechaNacimiento;
-			this.i_Nacionalidad = i_Nacionalidad;
-			this.v_NombreContacto = v_NombreContacto;
-			this.i_IdGrupoCliente = i_IdGrupoCliente;
-			this.i_IdListaPrecios = i_IdListaPrecios;
-			this.i_IdZona = i_IdZona;
-			this.i_EsPrestadorServicios = i_EsPrestadorServicios;
-			this.v_Servicio = v_Servicio;
-			this.i_IdConvenioDobleTributacion = i_IdConvenioDobleTributacion;
-			this.i_AfectoDetraccion = i_AfectoDetraccion;
-			this.i_UsaLineaCredito = i_UsaLineaCredito;
-			this.i_Eliminado = i_Eliminado;
-			this.v_NroCuentaDetraccion = v_NroCuentaDetraccion;
-			this.t_InsertaFecha = t_InsertaFecha;
-        }
     }
 }

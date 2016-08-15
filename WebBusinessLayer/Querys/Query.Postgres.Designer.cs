@@ -88,7 +88,7 @@ namespace WebBusinessLayer.Querys {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a SELECT * FROM venta WHERE &quot;v_IdCliente&quot;=@id.
+        ///   Busca una cadena traducida similar a SELECT * FROM venta WHERE  &quot;v_SerieDocumento&quot; LIKE &apos;[FB]%&apos; AND  &quot;v_IdCliente&quot;=@id.
         /// </summary>
         internal static string GetListFromClient {
             get {

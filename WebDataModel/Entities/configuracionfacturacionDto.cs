@@ -81,31 +81,5 @@ namespace WebDataModel.Entities
         public configuracionfacturacionDto()
         {
         }
-
-        public configuracionfacturacionDto(Int32 i_Idconfiguracionfacturacion, String v_Ruc, String v_Usuario, String v_Clave, String v_RazonSocial, String v_NombreComercial, String v_Domicilio, String v_Urbanizacion, String v_Ubigueo, String v_Departamento, String v_Provincia, String v_Distrito, String v_ClaveCertificado, Byte[] b_FileCertificado, Nullable<Int16> i_EsEmisor, Nullable<Int32> i_GroupUndInter, Nullable<Int32> i_GroupNCR, Nullable<Int32> i_GroupNDB, Nullable<Int16> i_TipoServicio, Byte[] b_Logo, String v_Web, String v_Resolucion)
-        {
-			this.i_Idconfiguracionfacturacion = i_Idconfiguracionfacturacion;
-			this.v_Ruc = v_Ruc;
-			this.v_Usuario = v_Usuario;
-			this.v_Clave = v_Clave;
-			this.v_RazonSocial = v_RazonSocial;
-			this.v_NombreComercial = v_NombreComercial;
-			this.v_Domicilio = v_Domicilio;
-			this.v_Urbanizacion = v_Urbanizacion;
-			this.v_Ubigueo = v_Ubigueo;
-			this.v_Departamento = v_Departamento;
-			this.v_Provincia = v_Provincia;
-			this.v_Distrito = v_Distrito;
-			this.v_ClaveCertificado = v_ClaveCertificado;
-			this.b_FileCertificado = b_FileCertificado;
-			this.i_EsEmisor = i_EsEmisor;
-			this.i_GroupUndInter = i_GroupUndInter;
-			this.i_GroupNCR = i_GroupNCR;
-			this.i_GroupNDB = i_GroupNDB;
-			this.i_TipoServicio = i_TipoServicio;
-			this.b_Logo = b_Logo;
-			this.v_Web = v_Web;
-			this.v_Resolucion = v_Resolucion;
-        }
     }
 }

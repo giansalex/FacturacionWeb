@@ -52,6 +52,7 @@
     <Compile Include="Entities\clienteDto.cs" />
     <Compile Include="Entities\configuracionfacturacionDto.cs" />
     <Compile Include="Entities\datahierarchyDto.cs" />
+    <Compile Include="Entities\productoiscDto.cs" />
     <Compile Include="Entities\ventadetalleDto.cs" />
     <Compile Include="Entities\ventaDto.cs" />
     <Compile Include="Entities\ventahomolagacionDto.cs" />

@@ -1,4 +1,5 @@
-﻿@using WebDataModel.Entities
+﻿@using WebBillPanel.Controllers
+@using WebDataModel.Entities
 @model IEnumerable<ventaDto>
 @{
     ViewBag.Title = "Panel";
@@ -84,23 +85,6 @@
     </div>
 </section>
 <br/>
-<!--
-<div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--3-col mdl-shadow--2dp" style="height: 100px">
-        <ul class="demo-list-three mdl-list">
-            <li class="mdl-list__item mdl-list__item--three-line">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-avatar">event_note</i>
-                    <span>10</span> 
-                    <span class="mdl-list__item-text-body">
-                        Facturas
-                    </span>
-                </span>
-            </li>
-        </ul>
-    </div>
-</div>
--->
 <h3 class="mdl-layout-title" style="padding: 10px; text-align: center"><span class="mdl-badge" data-badge="@Model.Count()">Comprobantes Electrónicos</span></h3>
 <div class="table-center">
     <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--8dp" style="margin: auto; width: 860px">
@@ -129,7 +113,8 @@
                     </div>
                 </td>
                 <td>
-                    <button id="btnDownXml_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+                    <button id="btnDownXml_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                            onclick="location.href='@Url.Action("GenerateXml", "Panel", new {id = Encryptor.Encode(item.v_IdVenta)})'">
                         <i class="material-icons">file_download</i>
                     </button>
                     <div class="mdl-tooltip" for="btnDownXml_@item.v_CorrelativoDocumento">
