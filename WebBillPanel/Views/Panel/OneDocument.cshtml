@@ -1,7 +1,96 @@
-﻿
+﻿@model WebDataModel.Entities.ventaDto
 @{
     ViewBag.Title = "Comprobante";
 }
+@helper DetailBill(string label, object content)
+{
+    <li class="mdl-list__item mdl-list__item--two-line">
+        <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-avatar">chevron_right</i>
+            <span>@label</span>
+            <span class="mdl-list__item-sub-title">@content</span>
+        </span>
+    </li>
+}
+@section HeadSite
+{
+    <style>
+         .mdl-card--width {
+             width: 30%
+         }
+         .demo-card-image.mdl-card {
+             background: url('http://cache2.asset-cache.net/xd/472867625.jpg?v=1&c=IWSAsset&k=2&d=62CA815BFB1CE48044F7A0DD2160E3CED1DB44E5599D888A4B8AF263FC1C6BC1EAAFC25BA74C92BF') center;
+             margin: auto
+         }
+        .demo-card-image > .mdl-card__actions {
+            height: 52px;
+            padding: 16px;
+            background: #000000;
+            background: rgba(0, 0, 0, 0.2);
+        }
 
-<h2>OneDocument</h2>
+        .demo-card-image__filename {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .detail-card {
+            margin: auto;
+        }
+        .detail--header-card {
+            color: #fff;
+            height: 100px;
+            /*background: url('http://www.automobileinsurance4less.com/images/pay_bill.jpg') center;*/
+        }
+    </style>
+}
+<br/>
+<div style="text-align: center">
+    @using (Html.BeginForm("LogoutDocument", "Panel", FormMethod.Post, new { id = "formLogout" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+    <div class="demo-card-image mdl-card mdl-shadow--6dp mdl-card--width">
+        <div class="mdl-card__title mdl-color-text--accent-contrast">Nombre - Razon Social Empresa</div>
+        <div class="mdl-card--expand"></div>
+        <div class="mdl-card__actions">
+            <span class="demo-card-image__filename">RUC: 20480048356</span>
+        </div>
+        <div class="mdl-card__menu">
+            <button id="btnLogout"  onclick="javascript: document.getElementById('formLogout').submit();" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white">
+                <i class="material-icons">power_settings_new</i>
+            </button>
+            <div class="mdl-tooltip" for="btnLogout">
+                Cerrar Sesión
+            </div>
+        </div>
+    </div>
+    <h3 class="mdl-layout-title" style="text-align: center">DETALLE</h3>
+    <div class="mdl-card detail-card mdl-shadow--6dp mdl-card--width">
+        <div class="mdl-card__title detail--header-card mdl-color--accent">
+            <h2 class="mdl-card__title-text">DETALLE</h2>
+        </div>
+        <ul class="mdl-list" style="text-align: left; padding-left: 20px">
+            @DetailBill("Documento", Model.v_SerieDocumento + "-" + Model.v_CorrelativoDocumento)
+            @DetailBill("Fecha Emision", Model.t_FechaRegistro.Value.ToShortDateString())
+            @DetailBill("Moneda", Model.i_IdMoneda == 1 ? "SOLES" : "DÓLARES")
+            @DetailBill("Valor", Model.d_Valor)
+            @DetailBill("Valor IGV", Model.d_IGV)
+            @DetailBill("Total", Model.d_ValorVenta)
+        </ul>
+        <div class="mdl-card__actions">
+            <button id="btnDownloadDoc" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                <i class="material-icons">cloud_download</i>
+            </button>
+            <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect"
+                for="btnDownloadDoc">
+                <li class="mdl-menu__item">Descargar PDF</li>
+                <li class="mdl-menu__item">Descargar XML</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br/>
+
+
 

@@ -94,6 +94,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\modernizr.full\readme.txt" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\mdl1.1.3\bootstrap-material-datetimepicker.js" />
     <Content Include="Content\mdl1.1.3\material.css" />
     <Content Include="Content\mdl1.1.3\material.js" />
     <Content Include="Content\mdl1.1.3\material.min.css" />
@@ -103,12 +108,24 @@
     <Content Include="Content\mdl1.1.3\mdl-selectfield.min.css" />
     <Content Include="Content\mdl1.1.3\mdl-selectfield.min.js" />
     <Content Include="Content\Site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\mdl1.1.3\material.min.css.map" />
     <Content Include="Content\mdl1.1.3\material.min.js.map" />
     <Content Include="Content\mdl1.1.3\mdl-selectfield.min.css.map" />
     <Content Include="Content\mdl1.1.3\mdl-selectfield.min.js.map" />
+    <Content Include="app.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -116,7 +133,9 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.6.2.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -148,6 +167,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebBusinessLayer\WebBusinessLayer.csproj">
+      <Project>{38f4c567-2a5e-4cdd-9491-8c2fa74802c6}</Project>
+      <Name>WebBusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebDataModel\WebDataModel.csproj">
+      <Project>{a649ff05-7937-4922-bb1f-7fcbe6308b3d}</Project>
+      <Name>WebDataModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

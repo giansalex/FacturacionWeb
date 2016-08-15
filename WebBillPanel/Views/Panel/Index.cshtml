@@ -1,30 +1,166 @@
-﻿@{
+﻿@using WebDataModel.Entities
+@model IEnumerable<ventaDto>
+@{
     ViewBag.Title = "Panel";
+    var cliente = (clienteDto)ViewBag.Cliente;
 }
-<h2>Comprobantes</h2>
-<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-    <thead>
+@section HeadSite
+{
+    <style>
+    section.section--center {
+      max-width: 860px;
+    }
+    div.table-center {
+        text-align: center;
+        padding: 20px 0;
+    }
+    section header i.iconUser--center {
+        margin-top: 40%;
+    }
+    section .img-Fondo {
+        background: url('http://uniconenc.com/default/img/mobilen/img/sub_3/dc.jpg')center / cover;
+    }
+    section.section--footer {
+      padding: 64px 0;
+      margin: 0 -8px -8px -8px;
+      background: whitesmoke;
+    }
+    </style>
+}
+@section BottomSite
+{
+    <script>
+        $(document).ready(function () {
+            'use strict';
+            var snackbarContainer = document.querySelector('#demo-snackbar-example');
+            var handler = function (event) {
+                var data = { message: 'Descarga Cancelada'};
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+            };
+            $('#btnDownloadPdf').click(function () {
+                'use strict';
+                var data = {
+                    message: 'Iniciando Descarga...',
+                    timeout: 2000,
+                    actionHandler: handler,
+                    actionText: 'Descartar'
+                };
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+            });
+            $('#btnLogout').click(function() {
+                $('#formLogout').submit();
+            });
+        });
+    </script>
+}
+<br/>
+@using (Html.BeginForm("Logout", "Panel", FormMethod.Post, new {id = "formLogout"}))
+{
+    @Html.AntiForgeryToken()
+}
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--6dp">
+    <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone img-Fondo">
+        <!--<i class="material-icons mdl-list__item-avatar iconUser--center">account_circle</i>-->
+    </div>
+    <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+        <div class="mdl-card__supporting-text">
+            <h4>@(@cliente.i_IdTipoIdentificacion == 1 ? "DNI:" : "RUC:") @cliente.v_NroDocIdentificacion</h4>
+            @(string.Join(" ", cliente.v_PrimerNombre, cliente.v_SegundoNombre, cliente.v_ApePaterno, cliente.v_ApeMaterno))
+            <br/>
+            @cliente.v_RazonSocial @cliente.v_DirecPrincipal
+            <br/>
+        </div>
+        <div class="mdl-card__actions mdl-card--border" style="margin-top: 20px">
+            <a href="@cliente.v_PaginaWeb" class="mdl-button mdl-button--colored">Ir a mi sitio</a>
+        </div>
+        <div class="mdl-card__menu">
+            <button id="btnLogout" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <i class="material-icons">power_settings_new</i>
+            </button>
+            <div class="mdl-tooltip" for="btnLogout">
+                Cerrar Sesión
+            </div>
+        </div>
+    </div>
+</section>
+<br/>
+<!--
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--3-col mdl-shadow--2dp" style="height: 100px">
+        <ul class="demo-list-three mdl-list">
+            <li class="mdl-list__item mdl-list__item--three-line">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-avatar">event_note</i>
+                    <span>10</span> 
+                    <span class="mdl-list__item-text-body">
+                        Facturas
+                    </span>
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
+-->
+<h3 class="mdl-layout-title" style="padding: 10px; text-align: center"><span class="mdl-badge" data-badge="@Model.Count()">Comprobantes Electrónicos</span></h3>
+<div class="table-center">
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--8dp" style="margin: auto; width: 860px">
+        <thead>
         <tr>
-            <th class="mdl-data-table__cell--non-numeric">Material</th>
-            <th>Quantity</th>
-            <th>Unit price</th>
+            <th class="mdl-data-table__cell--non-numeric">Serie</th>
+            <th class="mdl-data-table__cell--non-numeric">Fecha</th>
+            <th>Cantidad</th>
+            <th>PDF</th>
+            <th>XML</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-            <td>25</td>
-            <td>$2.90</td>
-        </tr>
-        <tr>
-            <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-            <td>50</td>
-            <td>$1.25</td>
-        </tr>
-        <tr>
-            <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
-            <td>10</td>
-            <td>$2.35</td>
-        </tr>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="mdl-data-table__cell--non-numeric">@item.v_SerieDocumento - @item.v_CorrelativoDocumento</td>
+                <td class="mdl-data-table__cell--non-numeric">@item.t_FechaRegistro</td>
+                <td>S/.@item.d_Total</td>
+                <td>
+                    <button id="btnDownPdf_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+                        <i class="material-icons">cloud_download</i>
+                    </button>
+                    <div class="mdl-tooltip" for="btnDownPdf_@item.v_CorrelativoDocumento">
+                        Descargar PDF
+                    </div>
+                </td>
+                <td>
+                    <button id="btnDownXml_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+                        <i class="material-icons">file_download</i>
+                    </button>
+                    <div class="mdl-tooltip" for="btnDownXml_@item.v_CorrelativoDocumento">
+                        Descargar XML
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <!-- Snack Bar Button Test-->
+    <button id="btnDownloadPdf" class="mdl-button mdl-js-button mdl-button--raised" type="button" hidden>Show Snackbar</button>
+    <div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+</div>
+<br/>
+<section class="section--footer mdl-grid">
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+        <div class="mdl-color--accent" style="width: 100px;height: 100px;border-radius: 50px;margin: 8px 32px;"></div>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+        <h5>Monto Total</h5>
+        El estándar UBL es extenso ya que permite especificar gran cantidad de información relacionada con los procesos comerciales.
+    </div>
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+        <div class="mdl-color--accent" style="width: 100px;height: 100px;border-radius: 50px;margin: 8px 32px;"></div>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+        <h5>Fecha de Registro</h5>
+        Se recomienda revisar la definición del estándar UBL y contar con una aplicación que permita validar y editar archivos de tipo xml.
+    </div>
+</section>

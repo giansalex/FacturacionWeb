@@ -3,22 +3,40 @@
     ViewBag.Title = "Login";
     var items = (IEnumerable<SelectListItem>)ViewBag.DocItems;
 }
-@section Site
+@section HeadSite
 {
-    <link rel="stylesheet" href="~/Content/mdl1.1.3/mdl-selectfield.css"/>
+    <link rel="stylesheet" href="~/Content/mdl1.1.3/mdl-selectfield.css" />
     <script src="~/Content/mdl1.1.3/mdl-selectfield.js"></script>
     <script src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
-    <link rel="stylesheet" href="http://t00rk.github.io/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" />
-    <script src="http://t00rk.github.io/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <link rel="stylesheet" href="http://t00rk.github.io/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"/>
+    <script src="~/Content/mdl1.1.3/bootstrap-material-datetimepicker.js"></script>
+}
+@section BottomSite
+{
     <script>
             $(document).ready(function () {
                 $('#FechaEmision')
-                .bootstrapMaterialDatePicker({ time: false, lang: 'es', weekStart: 1, maxDate: new Date() });
+                .bootstrapMaterialDatePicker({ time: false, lang: 'es', weekStart: 1, maxDate: new Date(), nowButton: true });
+                if(document.querySelector('#snack_loginDoc') != null)
+                    setTimeout(function () {
+                        var snackbarContainer = document.querySelector('#snack_loginDoc');
+                        var handler = function (event) {
+                            $('#TipoDocumento').focus();
+                        };
+                        var data = {
+                            message: 'Documento no encontrado!',
+                            timeout: 2000,
+                            actionHandler: handler,
+                            actionText: 'Retry'
+                        }
+                        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+                    }, 500);
+       
             });
     </script>
 }
 <div style="text-align: center; padding: 3% 0">
-    @using (Html.BeginForm("LoginDoc", "Home", FormMethod.Post, new { role = "form" }))
+    @using (Html.BeginForm("LoginDoc", "Home", FormMethod.Post, new {role = "form"}))
     {
         @Html.AntiForgeryToken()
         <div class="mdl-card mdl-shadow--6dp" style="margin: auto">
@@ -31,27 +49,30 @@
                     @Html.LabelFor(m => m.TipoDocumento, new {@class = "mdl-selectfield__label"})
                     <span class="mdl-selectfield__error">Selecciona un Valor</span>
                 </div>
-                @Html.ValidationMessageFor(m => m.TipoDocumento, "", new { @class = "mdl-color-text--red mdl-typography--font-bold" })
+                @Html.ValidationMessageFor(m => m.TipoDocumento, "", new {@class = "mdl-color-text--red mdl-typography--font-bold"})
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    @Html.TextBoxFor(m => m.Serie, new {@class = "mdl-textfield__input"})
+                    @Html.TextBoxFor(m => m.Serie, new {@class = "mdl-textfield__input", pattern = @"[FB]\w{3}"})
                     @Html.LabelFor(m => m.Serie, new {@class = "mdl-textfield__label"})
+                    <span class="mdl-textfield__error">Serie Inválida!</span>
                 </div>
-                @Html.ValidationMessageFor(m => m.Serie, "", new {@class = "mdl-color-text--red mdl-typography--font-bold" })
+                @Html.ValidationMessageFor(m => m.Serie, "", new {@class = "mdl-color-text--red mdl-typography--font-bold"})
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    @Html.TextBoxFor(m => m.Correlativo, new {@class = "mdl-textfield__input"})
+                    @Html.TextBoxFor(m => m.Correlativo, new {@class = "mdl-textfield__input", pattern = @"^\d{1,8}$"})
                     @Html.LabelFor(m => m.Correlativo, new {@class = "mdl-textfield__label"})
+                    <span class="mdl-textfield__error">Solo números, por favor!</span>
                 </div>
-                @Html.ValidationMessageFor(m => m.Correlativo, "", new {@class = "mdl-color-text--red mdl-typography--font-bold" })
+                @Html.ValidationMessageFor(m => m.Correlativo, "", new {@class = "mdl-color-text--red mdl-typography--font-bold"})
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     @Html.TextBoxFor(m => m.FechaEmision, new {@class = "mdl-textfield__input"})
                     @Html.LabelFor(m => m.FechaEmision, new {@class = "mdl-textfield__label"})
                 </div>
-                @Html.ValidationMessageFor(m => m.FechaEmision, "", new { @class = "mdl-color-text--red mdl-typography--font-bold" })
+                @Html.ValidationMessageFor(m => m.FechaEmision, "", new {@class = "mdl-color-text--red mdl-typography--font-bold"})
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    @Html.TextBoxFor(m => m.Total, new {@class = "mdl-textfield__input"})
+                    @Html.TextBoxFor(m => m.Total, new {@class = "mdl-textfield__input", pattern = @"\d+\.?\d*"})
                     @Html.LabelFor(m => m.Total, new {@class = "mdl-textfield__label"})
+                    <span class="mdl-textfield__error">Monto Inválido!</span>
                 </div>
-                @Html.ValidationMessageFor(m => m.Total, "", new { @class = "mdl-color-text--red mdl-typography--font-bold" })
+                @Html.ValidationMessageFor(m => m.Total, "", new {@class = "mdl-color-text--red mdl-typography--font-bold"})
             </div>
             <div class="mdl-card__actions mdl-card--border">
                 <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Ingresar</button>
@@ -59,3 +80,11 @@
         </div>
     }
 </div>
+@if (ViewBag.NoValid != null)
+{
+    <div id="snack_loginDoc" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+}
+
