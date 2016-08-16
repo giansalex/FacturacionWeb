@@ -225,11 +225,6 @@ namespace WebDataModel.Entities
 
         public Nullable<Int16> i_EsGratuito { get; set; }
 
-        public List<String> ventadetalle_v_IdVentaDetalle { get; set; }
-
-        
-        public List<Int32> ventahomolagacion_i_IdVentaHomologacion { get; set; }
-
         public ventaDto()
         {
         }

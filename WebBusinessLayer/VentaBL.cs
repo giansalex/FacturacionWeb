@@ -33,6 +33,15 @@ namespace WebBusinessLayer
             }
         }
 
+        /// <summary>
+        /// Obteien el Id de la venta segun la informacion proporcionada.
+        /// </summary>
+        /// <param name="tipoDoc">Tipo de documento</param>
+        /// <param name="serie">Serie del Documento</param>
+        /// <param name="correlativo">Correlativo del Documento</param>
+        /// <param name="fecha">Fecha de Emision</param>
+        /// <param name="total">Total de la Venta</param>
+        /// <returns></returns>
         public string GetIdVenta(int tipoDoc, string serie, string correlativo, DateTime fecha, decimal total)
         {
             try
@@ -51,6 +60,11 @@ namespace WebBusinessLayer
             }
         }
 
+        /// <summary>
+        /// Obtiene la cabecera de una venta
+        /// </summary>
+        /// <param name="idVenta">Id de la Venta</param>
+        /// <returns>Entity</returns>
         public ventaDto GetVenta(string idVenta)
         {
             try

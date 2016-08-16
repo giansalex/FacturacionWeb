@@ -97,6 +97,15 @@ namespace WebBusinessLayer.Querys {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a SELECT v_Ruc, v_RazonSocial, v_NombreComercial, v_Domicilio, v_Resolucion FROM configuracionfacturacion.
+        /// </summary>
+        internal static string GetLite {
+            get {
+                return ResourceManager.GetString("GetLite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a SELECT * FROM venta WHERE v_IdVenta=@idVenta.
         /// </summary>
         internal static string GetVenta {

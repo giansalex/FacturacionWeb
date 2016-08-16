@@ -36,5 +36,27 @@ namespace WebBusinessLayer
                 return null;
             }
         }
+
+        /// <summary>
+        /// Obtiene informacion necesaria para visualizar en la Web.
+        /// </summary>
+        /// <returns>dto</returns>
+        public configuracionfacturacionDto GetLite()
+        {
+            try
+            {
+                using (var db = DbHelper.GetConection())
+                {
+                    var config = db.Query<configuracionfacturacionDto>(nameof(GetLite)).First();
+                    LastResult.Success = true;
+                    return config;
+                }
+            }
+            catch (Exception ex)
+            {
+                LastResult.ErroMessage = ex.Message;
+                return null;
+            }
+        }
     }
 }

@@ -8,50 +8,37 @@
 @section HeadSite
 {
     <style>
-    section.section--center {
-      max-width: 860px;
-    }
-    div.table-center {
-        text-align: center;
-        padding: 20px 0;
-    }
-    section header i.iconUser--center {
-        margin-top: 40%;
-    }
-    section .img-Fondo {
-        background: url('http://uniconenc.com/default/img/mobilen/img/sub_3/dc.jpg')center / cover;
-    }
-    section.section--footer {
-      padding: 64px 0;
-      margin: 0 -8px -8px -8px;
-      background: whitesmoke;
-    }
+        section.section--center {
+            max-width: 860px;
+        }
+        div.table-center {
+            text-align: center;
+            padding: 20px 0;
+        }
+        section header i.iconUser--center {
+            margin-top: 40%;
+        }
+        section .img-Fondo {
+            background: url('http://uniconenc.com/default/img/mobilen/img/sub_3/dc.jpg') center/cover;
+        }
+        section.section--footer {
+            padding: 64px 0;
+            margin: 0 -8px -8px -8px;
+            background: whitesmoke;
+        }
     </style>
 }
 @section BottomSite
 {
     <script>
-        $(document).ready(function () {
-            'use strict';
-            var snackbarContainer = document.querySelector('#demo-snackbar-example');
-            var handler = function (event) {
-                var data = { message: 'Descarga Cancelada'};
-                snackbarContainer.MaterialSnackbar.showSnackbar(data);
-            };
-            $('#btnDownloadPdf').click(function () {
+        $(document)
+            .ready(function() {
                 'use strict';
-                var data = {
-                    message: 'Iniciando Descarga...',
-                    timeout: 2000,
-                    actionHandler: handler,
-                    actionText: 'Descartar'
-                };
-                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+                $('#btnLogout')
+                    .click(function() {
+                        $('#formLogout').submit();
+                    });
             });
-            $('#btnLogout').click(function() {
-                $('#formLogout').submit();
-            });
-        });
     </script>
 }
 <br/>
@@ -87,7 +74,7 @@
 <br/>
 <h3 class="mdl-layout-title" style="padding: 10px; text-align: center"><span class="mdl-badge" data-badge="@Model.Count()">Comprobantes Electrónicos</span></h3>
 <div class="table-center">
-    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--8dp" style="margin: auto; width: 860px">
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--8dp" style="margin: auto; width: 860px">
         <thead>
         <tr>
             <th class="mdl-data-table__cell--non-numeric">Serie</th>
@@ -102,10 +89,14 @@
         {
             <tr>
                 <td class="mdl-data-table__cell--non-numeric">@item.v_SerieDocumento - @item.v_CorrelativoDocumento</td>
-                <td class="mdl-data-table__cell--non-numeric">@item.t_FechaRegistro</td>
+                <td class="mdl-data-table__cell--non-numeric">@item.t_FechaRegistro.Value.ToShortDateString()</td>
                 <td>S/.@item.d_Total</td>
                 <td>
-                    <button id="btnDownPdf_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+                    @{
+                        var id = Encryptor.Encode(item.v_IdVenta);
+                    }
+                    <button id="btnDownPdf_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                            onclick="location.href = '@Url.Action("gen-pdf", "Panel", new {id, pred="uxsr"})'">
                         <i class="material-icons">cloud_download</i>
                     </button>
                     <div class="mdl-tooltip" for="btnDownPdf_@item.v_CorrelativoDocumento">
@@ -114,7 +105,7 @@
                 </td>
                 <td>
                     <button id="btnDownXml_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
-                            onclick="location.href='@Url.Action("GenerateXml", "Panel", new {id = Encryptor.Encode(item.v_IdVenta)})'">
+                            onclick="location.href = '@Url.Action("gen-xml", "Panel", new {id, pred="uxsr"})'">
                         <i class="material-icons">file_download</i>
                     </button>
                     <div class="mdl-tooltip" for="btnDownXml_@item.v_CorrelativoDocumento">
@@ -125,27 +116,26 @@
         }
         </tbody>
     </table>
-    <!-- Snack Bar Button Test-->
-    <button id="btnDownloadPdf" class="mdl-button mdl-js-button mdl-button--raised" type="button" hidden>Show Snackbar</button>
-    <div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">
-        <div class="mdl-snackbar__text"></div>
-        <button class="mdl-snackbar__action" type="button"></button>
-    </div>
 </div>
 <br/>
 <section class="section--footer mdl-grid">
     <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-        <div class="mdl-color--accent" style="width: 100px;height: 100px;border-radius: 50px;margin: 8px 32px;"></div>
+        <div class="mdl-color--accent" style="width: 100px; height: 100px; border-radius: 50px; margin: 8px 32px; text-align: center">
+            <i class="material-icons" style="margin-top: 36%; color:white">book</i>
+        </div>
     </div>
     <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-        <h5>Monto Total</h5>
-        El estándar UBL es extenso ya que permite especificar gran cantidad de información relacionada con los procesos comerciales.
+        <h5>Normas</h5>
+        Ver la resolución <a href="http://contenido.app.sunat.gob.pe/insc/NormasLegales/Res+Superintend/RS_185_2015_CDpelectronicos.pdf">Resolución de Superintendencia N° 185-2015/SUNAT</a>
+        sobre Comprobantes Electronicos.(Factura, Boleta, Notas de Credito y Notas de Debito) 
     </div>
     <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-        <div class="mdl-color--accent" style="width: 100px;height: 100px;border-radius: 50px;margin: 8px 32px;"></div>
+        <div class="mdl-color--accent" style="width: 100px; height: 100px; border-radius: 50px; margin: 8px 32px; text-align: center">
+            <i class="material-icons" style="margin-top: 36%; color:white">receipt</i>
+        </div>
     </div>
     <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-        <h5>Fecha de Registro</h5>
-        Se recomienda revisar la definición del estándar UBL y contar con una aplicación que permita validar y editar archivos de tipo xml.
+        <h5>Conservacion y Disposicion</h5>
+        Debe poner a disposición del adquirente, a través de una página web, por el plazo de un año, los comprobantes de pago y notas electrónicas entregadas, para poder ser descargados, leídos o impresos. 
     </div>
 </section>

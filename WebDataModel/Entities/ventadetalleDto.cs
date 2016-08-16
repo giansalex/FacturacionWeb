@@ -89,46 +89,5 @@ namespace WebDataModel.Entities
         public ventadetalleDto()
         {
         }
-
-        public ventadetalleDto(String v_IdVentaDetalle, String v_IdVenta, String v_IdMovimientoDetalle, String v_IdDiarioDetalle, Nullable<Int32> i_IdAlmacen, String v_NroCuenta, Nullable<Int32> i_Anticipio, String v_IdProductoDetalle, String v_DescripcionProducto, Nullable<Decimal> d_Cantidad, Nullable<Decimal> d_CantidadEmpaque, Nullable<Int32> i_IdUnidadMedida, Nullable<Decimal> d_Precio, Nullable<Decimal> d_Valor, Nullable<Decimal> d_ValorVenta, Nullable<Decimal> d_Descuento, Nullable<Decimal> d_Igv, Nullable<Decimal> d_PrecioVenta, Nullable<Decimal> d_PrecioImpresion, Nullable<Decimal> d_Percepcion, Nullable<Decimal> d_isc, Nullable<Decimal> d_otrostributos, Nullable<Int32> i_IdMonedaLP, Nullable<Int32> i_IdTipoOperacion, Nullable<Int32> i_IdTipoOperacionAnexo, Nullable<Int32> i_NroUnidades, Nullable<Decimal> d_PorcentajeComision, String v_Observaciones, String v_PedidoExportacion, String v_FacturaRef, String i_IdCentroCosto, Nullable<Int32> i_Eliminado, Nullable<Int32> i_InsertaIdUsuario, Nullable<DateTime> t_InsertaFecha, Nullable<Int32> i_ActualizaIdUsuario, Nullable<DateTime> t_ActualizaFecha, String venta_v_IdVenta)
-        {
-			this.v_IdVentaDetalle = v_IdVentaDetalle;
-			this.v_IdVenta = v_IdVenta;
-			this.v_IdMovimientoDetalle = v_IdMovimientoDetalle;
-			this.v_IdDiarioDetalle = v_IdDiarioDetalle;
-			this.i_IdAlmacen = i_IdAlmacen;
-			this.v_NroCuenta = v_NroCuenta;
-			this.i_Anticipio = i_Anticipio;
-			this.v_IdProductoDetalle = v_IdProductoDetalle;
-			this.v_DescripcionProducto = v_DescripcionProducto;
-			this.d_Cantidad = d_Cantidad;
-			this.d_CantidadEmpaque = d_CantidadEmpaque;
-			this.i_IdUnidadMedida = i_IdUnidadMedida;
-			this.d_Precio = d_Precio;
-			this.d_Valor = d_Valor;
-			this.d_ValorVenta = d_ValorVenta;
-			this.d_Descuento = d_Descuento;
-			this.d_Igv = d_Igv;
-			this.d_PrecioVenta = d_PrecioVenta;
-			this.d_PrecioImpresion = d_PrecioImpresion;
-			this.d_Percepcion = d_Percepcion;
-			this.d_isc = d_isc;
-			this.d_otrostributos = d_otrostributos;
-			this.i_IdMonedaLP = i_IdMonedaLP;
-			this.i_IdTipoOperacion = i_IdTipoOperacion;
-			this.i_IdTipoOperacionAnexo = i_IdTipoOperacionAnexo;
-			this.i_NroUnidades = i_NroUnidades;
-			this.d_PorcentajeComision = d_PorcentajeComision;
-			this.v_Observaciones = v_Observaciones;
-			this.v_PedidoExportacion = v_PedidoExportacion;
-			this.v_FacturaRef = v_FacturaRef;
-			this.i_IdCentroCosto = i_IdCentroCosto;
-			this.i_Eliminado = i_Eliminado;
-			this.i_InsertaIdUsuario = i_InsertaIdUsuario;
-			this.t_InsertaFecha = t_InsertaFecha;
-			this.i_ActualizaIdUsuario = i_ActualizaIdUsuario;
-			this.t_ActualizaFecha = t_ActualizaFecha;
-			this.venta_v_IdVenta = venta_v_IdVenta;
-        }
     }
 }

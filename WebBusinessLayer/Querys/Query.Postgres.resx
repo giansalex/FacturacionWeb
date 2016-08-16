@@ -127,7 +127,10 @@
     <value>SELECT "v_IdVenta" FROM venta WHERE "i_IdTipoDocumento"=@tipoDoc AND "v_SerieDocumento"=@serie AND "v_CorrelativoDocumento"=@correlativo AND "t_FechaRegistro"=@fecha AND "d_Total"=@total</value>
   </data>
   <data name="GetListFromClient" xml:space="preserve">
-    <value>SELECT * FROM venta WHERE  "v_SerieDocumento" LIKE '[FB]%' AND  "v_IdCliente"=@id</value>
+    <value>SELECT * FROM venta WHERE "v_IdCliente"=@id AND ("v_SerieDocumento" LIKE 'F%' OR "v_SerieDocumento" LIKE 'B%')</value>
+  </data>
+  <data name="GetLite" xml:space="preserve">
+    <value>SELECT "v_Ruc","v_RazonSocial","v_NombreComercial","v_Domicilio","v_Resolucion" FROM configuracionfacturacion</value>
   </data>
   <data name="GetVenta" xml:space="preserve">
     <value>SELECT * FROM venta WHERE "v_IdVenta"=@idVenta</value>

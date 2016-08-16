@@ -27,6 +27,8 @@ namespace WebBillPanel.Controllers
             if (idVenta == null) return RedirectToAction("Index", "Home");
             var vbl = new VentaBl();
             var v = vbl.GetVenta(idVenta.ToString());
+            if (!vbl.LastResult.Success) return HttpNotFound("Error de Conexion");
+            ViewBag.Config = new ConfiguracionFacturacionBl().GetLite();
             return View(v);
         }
 
@@ -46,16 +48,52 @@ namespace WebBillPanel.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public FileResult GenerateXml(string id)
+        [ActionName("gen-xml")]
+        public FileResult GenerateXml(string id, string pred)
         {
-            if (Session["_idUser__"] == null) return null;
-            var idVenta = Encryptor.Decode(id);
-            var path = new XmlHelper().Generar(idVenta);
-            if (System.IO.File.Exists(path))
+            if(pred == "uxsr" && Session["_idUser__"] == null)
+                return null;
+            if (pred == "vb12d" && Session["_idVenta__"] == null)
+                return null;
+            try
             {
-                byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-                string fileName = Path.GetFileName(path);
-                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+                var idVenta = Encryptor.Decode(id);
+                var path = new XmlHelper().Generar(idVenta);
+                if (System.IO.File.Exists(path))
+                {
+                    byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+                    System.IO.File.Delete(path);
+                    return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(path));
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+            return null;
+        }
+
+        [ActionName("gen-pdf")]
+        public FileResult GeneratePdf(string id,string org)
+        {
+            if (org == "uxsr" && Session["_idUser__"] == null)
+                return null;
+            if (org == "vb12d" && Session["_idVenta__"] == null)
+                return null;
+            try
+            {
+                var idVenta = Encryptor.Decode(id);
+                var path = new RepFacturacionElectronica().GenerarPdf(idVenta);
+                if (!string.IsNullOrEmpty(path))
+                {
+                    byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+                    System.IO.File.Delete(path);
+                    return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Pdf, Path.GetFileName(path));
+                }
+            }
+            catch
+            {
+                // ignored
             }
             return null;
         }

@@ -1,27 +1,36 @@
-﻿@model WebDataModel.Entities.ventaDto
+﻿@using WebBillPanel.Controllers
+@using WebDataModel.Entities
+@model ventaDto
 @{
     ViewBag.Title = "Comprobante";
+    var config = (configuracionfacturacionDto)ViewBag.Config;
 }
-@helper DetailBill(string label, object content)
+@helper SetInfo(string label, object content)
 {
-    <li class="mdl-list__item mdl-list__item--two-line">
-        <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-avatar">chevron_right</i>
-            <span>@label</span>
-            <span class="mdl-list__item-sub-title">@content</span>
-        </span>
-    </li>
+    <span class="mdl-typography--headline" style="font-weight: bold;font-size: 18px;display: block">@label</span>
+    <span style="display: block">@content</span>
+}
+@helper SetDetail(string label, object content)
+{
+    <div class="form-group">
+        <label class="col-sm-2 control-label">@label</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" value="@content">
+        </div>
+    </div>
 }
 @section HeadSite
 {
+<link rel="stylesheet" href="~/Content/bootstrap.css" />
+<link rel="stylesheet" href="~/Content/bootstrap-theme.css"/>
     <style>
-         .mdl-card--width {
-             width: 30%
-         }
-         .demo-card-image.mdl-card {
-             background: url('http://cache2.asset-cache.net/xd/472867625.jpg?v=1&c=IWSAsset&k=2&d=62CA815BFB1CE48044F7A0DD2160E3CED1DB44E5599D888A4B8AF263FC1C6BC1EAAFC25BA74C92BF') center;
-             margin: auto
-         }
+        .mdl-card--width {
+            width: 30%
+        }
+        .demo-card-image.mdl-card {
+            background: url('http://cache2.asset-cache.net/xd/472867625.jpg?v=1&c=IWSAsset&k=2&d=62CA815BFB1CE48044F7A0DD2160E3CED1DB44E5599D888A4B8AF263FC1C6BC1EAAFC25BA74C92BF') center;
+            margin: auto
+        }
         .demo-card-image > .mdl-card__actions {
             height: 52px;
             padding: 16px;
@@ -44,49 +53,81 @@
         }
     </style>
 }
+@section BottomSite
+{
+    <script src="~/Scripts/bootstrap.js"></script>
+}
 <br/>
-<div style="text-align: center">
-    @using (Html.BeginForm("LogoutDocument", "Panel", FormMethod.Post, new { id = "formLogout" }))
-    {
-        @Html.AntiForgeryToken()
-    }
-    <div class="demo-card-image mdl-card mdl-shadow--6dp mdl-card--width">
-        <div class="mdl-card__title mdl-color-text--accent-contrast">Nombre - Razon Social Empresa</div>
-        <div class="mdl-card--expand"></div>
-        <div class="mdl-card__actions">
-            <span class="demo-card-image__filename">RUC: 20480048356</span>
-        </div>
-        <div class="mdl-card__menu">
-            <button id="btnLogout"  onclick="javascript: document.getElementById('formLogout').submit();" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white">
-                <i class="material-icons">power_settings_new</i>
-            </button>
-            <div class="mdl-tooltip" for="btnLogout">
-                Cerrar Sesión
+
+@using (Html.BeginForm("LogoutDocument", "Panel", FormMethod.Post, new { id = "formLogout" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="container">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Informacion del Emisor
+                <button id="btnLogout" onclick="javascript: document.getElementById('formLogout').submit();" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+                        style="float: right; margin-top: -0.5rem">
+                    <i class="material-icons">power_settings_new</i>
+                </button>
+                <div class="mdl-tooltip" for="btnLogout">
+                    Cerrar Sesión
+                </div>
+            </div>
+            <div class="panel-body">
+                @SetInfo("RUC", config.v_Ruc)<br/>
+                @SetInfo("Razon Social", config.v_RazonSocial)<br />
+                @SetInfo("Nombre Comercial", config.v_NombreComercial)<br />
+                @SetInfo("Direccion", config.v_Domicilio)<br />
+                @SetInfo("Resolucion SUNTA", config.v_Resolucion)
             </div>
         </div>
     </div>
-    <h3 class="mdl-layout-title" style="text-align: center">DETALLE</h3>
-    <div class="mdl-card detail-card mdl-shadow--6dp mdl-card--width">
-        <div class="mdl-card__title detail--header-card mdl-color--accent">
-            <h2 class="mdl-card__title-text">DETALLE</h2>
-        </div>
-        <ul class="mdl-list" style="text-align: left; padding-left: 20px">
-            @DetailBill("Documento", Model.v_SerieDocumento + "-" + Model.v_CorrelativoDocumento)
-            @DetailBill("Fecha Emision", Model.t_FechaRegistro.Value.ToShortDateString())
-            @DetailBill("Moneda", Model.i_IdMoneda == 1 ? "SOLES" : "DÓLARES")
-            @DetailBill("Valor", Model.d_Valor)
-            @DetailBill("Valor IGV", Model.d_IGV)
-            @DetailBill("Total", Model.d_ValorVenta)
-        </ul>
-        <div class="mdl-card__actions">
-            <button id="btnDownloadDoc" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                <i class="material-icons">cloud_download</i>
-            </button>
-            <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect"
-                for="btnDownloadDoc">
-                <li class="mdl-menu__item">Descargar PDF</li>
-                <li class="mdl-menu__item">Descargar XML</li>
-            </ul>
+    <div class="col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="font-weight: bold">
+                @switch (Model.i_IdTipoDocumento)
+                {
+                    case 1:
+                        <span>FACTURA ELECTRONICA</span>
+                        break;
+                    case 3:
+                        <span>BOLETA ELECTRONICA</span>
+                        break;
+                    case 7:
+                        <span>NOTA DE CREDITO ELECTRONICA</span>
+                        break;
+                    case 8:
+                        <span>NOTA DE DEBITO ELECTRONICA</span>
+                        break;
+                }
+                <span style="float: right">@(Model.v_SerieDocumento + "-" + Model.v_CorrelativoDocumento)</span>
+            </div>
+            <div class="panel-body" style="padding:2rem 10%">
+                <form class="form-horizontal">
+                    @SetDetail("Fecha", Model.t_FechaRegistro?.ToShortDateString())
+                    @SetDetail("Moneda", Model.i_IdMoneda == 1 ? "SOLES" : "DOLARES")
+                    @SetDetail("SubTotal", (Model.d_Valor ?? 0).ToString("N2"))
+                    @SetDetail("Descuento", (Model.d_Descuento ?? 0).ToString("N2"))
+                    @SetDetail("IGV", (Model.d_IGV ?? 0).ToString("N2"))
+                    @SetDetail("Total", (Model.d_Total ?? 0).ToString("N2"))
+                </form>
+                <div class="text-center">
+                    <button id="btnDownloadDoc" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                        <i class="material-icons">cloud_download</i>
+                    </button>
+                    <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect"
+                        for="btnDownloadDoc">
+                        @{
+                            var id = Encryptor.Encode(Model.v_IdVenta);
+                        }
+                        <li class="mdl-menu__item" onclick="location.href ='@Url.Action("gen-pdf", "Panel", new {id, org="vb12d"})'">Descargar PDF</li>
+                        <li class="mdl-menu__item" onclick="location.href ='@Url.Action("gen-xml", "Panel", new {id, org="vb12d"})'">Descargar XML</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

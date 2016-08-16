@@ -88,11 +88,20 @@ namespace WebBusinessLayer.Querys {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a SELECT * FROM venta WHERE  &quot;v_SerieDocumento&quot; LIKE &apos;[FB]%&apos; AND  &quot;v_IdCliente&quot;=@id.
+        ///   Busca una cadena traducida similar a SELECT * FROM venta WHERE &quot;v_IdCliente&quot;=@id AND (&quot;v_SerieDocumento&quot; LIKE &apos;F%&apos; OR &quot;v_SerieDocumento&quot; LIKE &apos;B%&apos;).
         /// </summary>
         internal static string GetListFromClient {
             get {
                 return ResourceManager.GetString("GetListFromClient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SELECT &quot;v_Ruc&quot;,&quot;v_RazonSocial&quot;,&quot;v_NombreComercial&quot;,&quot;v_Domicilio&quot;,&quot;v_Resolucion&quot; FROM configuracionfacturacion.
+        /// </summary>
+        internal static string GetLite {
+            get {
+                return ResourceManager.GetString("GetLite", resourceCulture);
             }
         }
         

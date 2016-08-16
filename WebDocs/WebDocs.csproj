@@ -30,11 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="FacturacionElectronica.GeneradorXml">
       <HintPath>E:\FacturacionElectronica\FacturacionElectronica\FacturacionElectronica.GeneradorXml\bin\Release\FacturacionElectronica.GeneradorXml.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,9 +48,24 @@
     <Reference Include="UblLarsen.Ubl2">
       <HintPath>E:\FacturacionElectronica\FacturacionElectronica\FacturacionElectronica.GeneradorXml\bin\Release\UblLarsen.Ubl2.dll</HintPath>
     </Reference>
+    <Reference Include="Zen.Barcode.Core">
+      <HintPath>..\packages\Zen.Barcode.Rendering.Framework.3.1.10729.1\lib\Zen.Barcode.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RepFacturacionElectronica.cs" />
+    <Compile Include="Report\dsFacturacionElectronica1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsFacturacionElectronica.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\crFacturaElectronica.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crFacturaElectronica.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\Security.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="XmlHelper.cs" />
@@ -61,7 +80,30 @@
       <Name>WebDataModel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Report\dsFacturacionElectronica.xsc">
+      <DependentUpon>dsFacturacionElectronica.xsd</DependentUpon>
+    </None>
+    <None Include="Report\dsFacturacionElectronica.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsFacturacionElectronica1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Report\dsFacturacionElectronica.xss">
+      <DependentUpon>dsFacturacionElectronica.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Report\crFacturaElectronica.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crFacturaElectronica.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

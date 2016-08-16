@@ -63,6 +63,7 @@
       <DependentUpon>Query.SqlServer.resx</DependentUpon>
     </Compile>
     <Compile Include="Querys\QueryHelper.cs" />
+    <Compile Include="Report\ReporteDocumentoFactura.cs" />
     <Compile Include="Results.cs" />
     <Compile Include="VentaBL.cs" />
   </ItemGroup>

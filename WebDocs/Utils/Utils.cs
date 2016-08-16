@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Data;
 
 namespace WebDocs.Utils
 {
@@ -21,7 +20,6 @@ namespace WebDocs.Utils
             {
                 dec = " CON " + "00/100";
             }
-
             var res = toText(Convert.ToDouble(entero)) + dec;
             return res;
 
@@ -181,6 +179,34 @@ namespace WebDocs.Utils
 
             }
             return Num2Text;
+        }
+
+        public static DataTable ConvertToDatatable<T>(List<T> data)
+        {
+            var table = new DataTable();
+
+            var props = TypeDescriptor.GetProperties(typeof(T));
+
+            for (var i = 0; i < props.Count; i++)
+            {
+                var prop = props[i];
+                if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    table.Columns.Add(prop.Name, prop.PropertyType.GetGenericArguments()[0]);
+                else
+                    table.Columns.Add(prop.Name, prop.PropertyType);
+            }
+
+            var values = new object[props.Count];
+            foreach (var item in data)
+            {
+                for (var i = 0; i < values.Length; i++)
+                {
+                    values[i] = props[i].GetValue(item);
+                }
+                table.Rows.Add(values);
+            }
+            return table;
+
         }
     }
 }
