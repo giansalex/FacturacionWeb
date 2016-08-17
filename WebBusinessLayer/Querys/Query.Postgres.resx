@@ -126,13 +126,42 @@
   <data name="GetIdVenta" xml:space="preserve">
     <value>SELECT "v_IdVenta" FROM venta WHERE "i_IdTipoDocumento"=@tipoDoc AND "v_SerieDocumento"=@serie AND "v_CorrelativoDocumento"=@correlativo AND "t_FechaRegistro"=@fecha AND "d_Total"=@total</value>
   </data>
+  <data name="GetIscFromDetail" xml:space="preserve">
+    <value>SELECT i."d_Monto", i."d_Porcentaje", i."i_IdSistemaIsc" FROM productodetalle p
+LEFT OUTER JOIN productoisc i ON p."v_IdProducto" = i."v_IdProducto"
+WHERE p."v_IdProductoDetalle" = @id  AND  i."v_Periodo" = @periodo</value>
+  </data>
   <data name="GetListFromClient" xml:space="preserve">
     <value>SELECT * FROM venta WHERE "v_IdCliente"=@id AND ("v_SerieDocumento" LIKE 'F%' OR "v_SerieDocumento" LIKE 'B%')</value>
   </data>
   <data name="GetLite" xml:space="preserve">
     <value>SELECT "v_Ruc","v_RazonSocial","v_NombreComercial","v_Domicilio","v_Resolucion" FROM configuracionfacturacion</value>
   </data>
+  <data name="GetReporteInvoice" xml:space="preserve">
+    <value>SELECT v.*, vd.*,
+c."v_IdCliente", c."i_IdTipoIdentificacion", c."v_NroDocIdentificacion", c."v_PrimerNombre", c."v_SegundoNombre", c."v_ApePaterno", c."v_ApeMaterno", c."v_RazonSocial", c."v_DirecPrincipal",
+d1."v_Value1", d2."v_Value1" FROM venta v
+LEFT OUTER JOIN cliente c ON v."v_IdCliente"= c."v_IdCliente"
+LEFT OUTER JOIN ventadetalle vd ON v."v_IdVenta" = vd."v_IdVenta"
+LEFT OUTER JOIN datahierarchy d1 ON  vd."i_IdUnidadMedida"= d1."i_ItemId" AND d1."i_GroupId" = 17
+LEFT OUTER JOIN datahierarchy d2 ON  v."i_IdIgv" = d2."i_ItemId" AND d2."i_GroupId" = 27
+WHERE v."v_IdVenta" = @id;</value>
+  </data>
   <data name="GetVenta" xml:space="preserve">
     <value>SELECT * FROM venta WHERE "v_IdVenta"=@idVenta</value>
+  </data>
+  <data name="GetVentaCliente" xml:space="preserve">
+    <value>SELECT v.*, c."i_IdTipoIdentificacion",c."v_NroDocIdentificacion",c."v_ApePaterno",
+c."v_ApeMaterno",c."v_PrimerNombre",c."v_SegundoNombre", c."v_RazonSocial", d."v_Value1" FROM venta v
+LEFT OUTER JOIN cliente c ON v."v_IdCliente" = c."v_IdCliente"
+LEFT OUTER JOIN datahierarchy d ON v."i_IdIgv" = d."i_ItemId" AND d."i_GroupId" = 27
+ WHERE v."v_IdVenta" = @idVenta</value>
+  </data>
+  <data name="GetVentaDetalles" xml:space="preserve">
+    <value>SELECT v.*, d2."v_Value2", d3."v_Value2" FROM ventadetalle v
+LEFT OUTER JOIN datahierarchy d on v."i_IdUnidadMedida"= d."i_ItemId" AND d."i_GroupId"= 17
+LEFT OUTER JOIN datahierarchy d2 on d."i_ParentItemId" = d2."i_ItemId" AND d2."i_GroupId" = @idg
+LEFT OUTER JOIN datahierarchy d3 ON v."i_IdTipoOperacion" = d3."i_ItemId" AND d3."i_GroupId" = 35
+WHERE v."v_IdVenta" = @id</value>
   </data>
 </root>

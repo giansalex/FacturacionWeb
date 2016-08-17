@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Data.Common;
 using System.Data.SqlClient;
 using Npgsql;
 
@@ -18,9 +16,9 @@ namespace WebDataModel
         public static DbConnection GetConection()
         {
 #if SQLSERVER
-            return new SqlConnection(Properties.Resources.ConectionString);
+            return new SqlConnection(Properties.Resources.SqlConectionString);
 #else
-            return new NpgsqlConnection(Properties.Resources.ConectionString);
+            return new NpgsqlConnection(Properties.Resources.PostgreSQLContecionString);
 #endif
         }
     }

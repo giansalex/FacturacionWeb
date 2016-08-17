@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using WebBusinessLayer.Querys;
 using WebBusinessLayer.Report;
 using WebDataModel;
 using WebDataModel.Entities;
@@ -23,11 +24,7 @@ namespace WebBusinessLayer
                 using (var con = DbHelper.GetConection())
                 {
                     var res = con.Query<ventaDto, clienteDto, string, Tuple<ventaDto, clienteDto, decimal>>(
-                        @"SELECT v.*, c.i_IdTipoIdentificacion,c.v_NroDocIdentificacion,c.v_ApePaterno,
-                        c.v_ApeMaterno,c.v_PrimerNombre,c.v_SegundoNombre, c.v_RazonSocial, d.v_Value1 FROM venta v 
-                        LEFT OUTER JOIN cliente c ON v.v_IdCliente = c.v_IdCliente
-                        LEFT OUTER JOIN datahierarchy d ON v.i_IdIgv = d.i_ItemId AND d.i_GroupId = 27
-                        WHERE v.v_IdVenta = @idVenta", (a, b, igv) => new Tuple<ventaDto, clienteDto, decimal>(a, b , decimal.Parse(igv ?? "18") / 100),
+                        QueryHelper.GetQuery(nameof(GetVentaCliente)), (a, b, igv) => new Tuple<ventaDto, clienteDto, decimal>(a, b , decimal.Parse(igv ?? "18") / 100),
                         new { idVenta }, splitOn: "i_IdTipoIdentificacion,v_Value1").First();
                     LastResult = true;
                     return res;
@@ -53,11 +50,7 @@ namespace WebBusinessLayer
                 using (var con = DbHelper.GetConection())
                 {
                     var res = con.Query<ventadetalleDto, string, string, Tuple <ventadetalleDto, string, short>>(
-                        @"SELECT v.*, d2.v_Value2, d3.v_Value2 FROM ventadetalle v
-                        LEFT OUTER JOIN datahierarchy d on v.i_IdUnidadMedida = d.i_ItemId AND d.i_GroupId = 17
-                        LEFT OUTER JOIN datahierarchy d2 on d.i_ParentItemId = d2.i_ItemId AND d2.i_GroupId = @idg
-                        LEFT OUTER JOIN datahierarchy d3 ON v.i_IdTipoOperacion = d3.i_ItemId AND d3.i_GroupId = 35
-                        WHERE v.v_IdVenta = @id;", 
+                        QueryHelper.GetQuery(nameof(GetVentaDetalles)), 
                         (a, unid, tipoOp) => new Tuple<ventadetalleDto, string, short>(a, unid, short.Parse(tipoOp)), new { idg = grouUnidad, id}, splitOn: "v_Value2").ToArray();
                     LastResult = true;
                     return res;
@@ -83,9 +76,7 @@ namespace WebBusinessLayer
                 using (var con = DbHelper.GetConection())
                 {
                     var isc = con.Query<productoiscDto>(
-                            @"SELECT i.d_Monto, i.d_Porcentaje, i.i_IdSistemaIsc FROM productodetalle p
-                            LEFT OUTER JOIN productoisc i ON p.v_IdProducto = i.v_IdProducto
-                            WHERE p.v_IdProductoDetalle = @id  AND  i.v_Periodo = @periodo;",
+                            QueryHelper.GetQuery(nameof(GetIscFromDetail)),
                             new {id, periodo}).First();
                     LastResult = true;
                     return isc;
@@ -105,14 +96,7 @@ namespace WebBusinessLayer
                 using (var con = DbHelper.GetConection())
                 {
                     var res = con.Query<ventaDto, ventadetalleDto, clienteDto, string, string, ReporteDocumentoFactura>(
-                                @"SELECT v.*, vd.*, 
-                                c.v_IdCliente, c.i_IdTipoIdentificacion, c.v_NroDocIdentificacion, c.v_PrimerNombre, c.v_SegundoNombre, c.v_ApePaterno, c.v_ApeMaterno, c.v_RazonSocial, c.v_DirecPrincipal,
-                                d1.v_Value1, d2.v_Value1 FROM venta v
-                                LEFT OUTER JOIN cliente c ON v.v_IdCliente = c.v_IdCliente
-                                LEFT OUTER JOIN ventadetalle vd ON v.v_IdVenta = vd.v_IdVenta
-                                LEFT OUTER JOIN datahierarchy d1 ON  vd.i_IdUnidadMedida = d1.i_ItemId AND d1.i_GroupId = 17
-                                LEFT OUTER JOIN datahierarchy d2 ON  v.i_IdIgv = d2.i_ItemId AND d2.i_GroupId = 27
-                                WHERE v.v_IdVenta = @id", (venta, detalle, c, unidad, igv) => new ReporteDocumentoFactura
+                                QueryHelper.GetQuery(nameof(GetReporteInvoice)), (venta, detalle, c, unidad, igv) => new ReporteDocumentoFactura
                                 {
                                     FechaRegistro = venta.t_FechaRegistro ?? DateTime.Now,
                                     NroDocCliente = c == null ? string.Empty : c.v_NroDocIdentificacion,

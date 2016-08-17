@@ -47,7 +47,7 @@ namespace WebBusinessLayer
             {
                 using (var db = DbHelper.GetConection())
                 {
-                    var config = db.Query<configuracionfacturacionDto>(nameof(GetLite)).First();
+                    var config = db.Query<configuracionfacturacionDto>(QueryHelper.GetQuery(nameof(GetLite))).First();
                     LastResult.Success = true;
                     return config;
                 }

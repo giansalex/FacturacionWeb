@@ -88,6 +88,17 @@ namespace WebBusinessLayer.Querys {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a SELECT i.d_Monto, i.d_Porcentaje, i.i_IdSistemaIsc FROM productodetalle p
+        ///                            LEFT OUTER JOIN productoisc i ON p.v_IdProducto = i.v_IdProducto
+        ///                            WHERE p.v_IdProductoDetalle = @id  AND  i.v_Periodo = @periodo;.
+        /// </summary>
+        internal static string GetIscFromDetail {
+            get {
+                return ResourceManager.GetString("GetIscFromDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a SELECT * FROM venta WHERE v_SerieDocumento LIKE &apos;[FB]%&apos; AND v_IdCliente=@id.
         /// </summary>
         internal static string GetListFromClient {
@@ -106,11 +117,51 @@ namespace WebBusinessLayer.Querys {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a SELECT v.*, vd.*, 
+        ///                                c.v_IdCliente, c.i_IdTipoIdentificacion, c.v_NroDocIdentificacion, c.v_PrimerNombre, c.v_SegundoNombre, c.v_ApePaterno, c.v_ApeMaterno, c.v_RazonSocial, c.v_DirecPrincipal,
+        ///                                d1.v_Value1, d2.v_Value1 FROM venta v
+        ///                                LEFT OUTER JOIN cliente c ON v.v_IdCliente = c.v_IdCliente
+        ///                                LEFT OUTER JOIN ventadetalle vd ON v.v_IdVenta = vd.v_IdVenta
+        ///                             [resto de la cadena truncado]&quot;;.
+        /// </summary>
+        internal static string GetReporteInvoice {
+            get {
+                return ResourceManager.GetString("GetReporteInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a SELECT * FROM venta WHERE v_IdVenta=@idVenta.
         /// </summary>
         internal static string GetVenta {
             get {
                 return ResourceManager.GetString("GetVenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SELECT v.*, c.i_IdTipoIdentificacion,c.v_NroDocIdentificacion,c.v_ApePaterno,
+        ///                        c.v_ApeMaterno,c.v_PrimerNombre,c.v_SegundoNombre, c.v_RazonSocial, d.v_Value1 FROM venta v 
+        ///                        LEFT OUTER JOIN cliente c ON v.v_IdCliente = c.v_IdCliente
+        ///                        LEFT OUTER JOIN datahierarchy d ON v.i_IdIgv = d.i_ItemId AND d.i_GroupId = 27
+        ///                        WHERE v.v_IdVenta = @idVenta.
+        /// </summary>
+        internal static string GetVentaCliente {
+            get {
+                return ResourceManager.GetString("GetVentaCliente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SELECT v.*, d2.v_Value2, d3.v_Value2 FROM ventadetalle v
+        ///                        LEFT OUTER JOIN datahierarchy d on v.i_IdUnidadMedida = d.i_ItemId AND d.i_GroupId = 17
+        ///                        LEFT OUTER JOIN datahierarchy d2 on d.i_ParentItemId = d2.i_ItemId AND d2.i_GroupId = @idg
+        ///                        LEFT OUTER JOIN datahierarchy d3 ON v.i_IdTipoOperacion = d3.i_ItemId AND d3.i_GroupId = 35
+        ///                        WHERE v.v_IdVenta = @id.
+        /// </summary>
+        internal static string GetVentaDetalles {
+            get {
+                return ResourceManager.GetString("GetVentaDetalles", resourceCulture);
             }
         }
     }
