@@ -37,7 +37,7 @@ namespace WebBillPanel.Controllers
         public ActionResult Logout()
         {
             Session["_idUser__"] = null;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LoginUser", "Home");
         }
 
         [HttpPost]
@@ -45,7 +45,7 @@ namespace WebBillPanel.Controllers
         public ActionResult LogoutDocument()
         {
             Session["_idVenta__"] = null;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LoginDoc", "Home");
         }
 
         [ActionName("gen-xml")]

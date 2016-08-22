@@ -17,6 +17,9 @@ using WebDocs.Utils;
 using OperationResult2 = FacturacionElectronica.GeneradorXml.Res.OperationResult;
 namespace WebDocs
 {
+    /// <summary>
+    /// Class XmlHelper.
+    /// </summary>
     public class XmlHelper
     {
         #region Fields
@@ -25,6 +28,11 @@ namespace WebDocs
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Generars the specified identifier venta.
+        /// </summary>
+        /// <param name="idVenta">The identifier venta.</param>
+        /// <returns>System.String.</returns>
         public string Generar(string idVenta)
         {
             #region Entidad
