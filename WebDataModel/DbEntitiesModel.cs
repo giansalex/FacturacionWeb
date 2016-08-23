@@ -9,32 +9,26 @@ namespace WebDataModel
     /// </summary>
     public class DbHelper
     {
+
         /// <summary>
-        /// Obtiene una conexion a las base de Datos Especificada.
+        /// Gets the SQL conection to DB.
         /// </summary>
-        /// <returns>Conection to db</returns>
-        public static DbConnection GetConection()
+        /// <param name="strconection">The strconection.</param>
+        /// <returns>DbConnection.</returns>
+        public static DbConnection GetSqlConection(string strconection)
         {
-#if SQLSERVER
-            return new SqlConnection(Properties.Resources.SqlConectionString);
-#else
-            return new NpgsqlConnection(Properties.Resources.PostgreSQLContecionString);
-#endif
+            return new SqlConnection(strconection);
+        }
+
+        /// <summary>
+        /// Gets the postgres conection to DB.
+        /// </summary>
+        /// <param name="strconection">The strconection.</param>
+        /// <returns>DbConnection.</returns>
+        public static DbConnection GetPostgresConection(string strconection)
+        {
+            return new NpgsqlConnection(strconection);
         }
     }
 
-    /// <summary>
-    /// Tipos de Base de Datos permitidas.
-    /// </summary>
-    public enum TipoDb
-    {
-        /// <summary>
-        /// Microsot SQL Server.
-        /// </summary>
-        SqlServer,
-        /// <summary>
-        /// PostgreSQL
-        /// </summary>
-        PostgreSql
-    }
 }

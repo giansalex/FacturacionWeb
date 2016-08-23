@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Resources;
+using WebBusinessLayer.Security;
 
 namespace WebBusinessLayer.Querys
 {
@@ -21,11 +15,9 @@ namespace WebBusinessLayer.Querys
         /// <returns>Sentencia sql</returns>
         public static string GetQuery(string name)
         {
-#if SQLSERVER
-            ResourceManager resx = Query_SqlServer.ResourceManager;
-#else
-           ResourceManager resx = Query_Postgres.ResourceManager;
-#endif
+            ResourceManager resx = ManagerConfiguration.Bd == DataBases.SqlServer 
+                ? Query_SqlServer.ResourceManager 
+                :Query_Postgres.ResourceManager;
             return resx.GetString(name);
         }
     }

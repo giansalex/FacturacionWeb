@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
-using WebDataModel;
+using WebBusinessLayer.Security;
 using WebDataModel.Entities;
 
 namespace WebBusinessLayer
@@ -19,7 +19,7 @@ namespace WebBusinessLayer
         {
             try
             {
-                using (var dbContext = DbHelper.GetConection())
+                using (var dbContext = DbWeb.GetConection())
                 {
                     var items = dbContext.Query<ventaDto>(QueryHelper.GetQuery(nameof(GetListFromClient)), new {id =idCliente});
                     LastResult.Success = true;
@@ -28,7 +28,7 @@ namespace WebBusinessLayer
             }
             catch (Exception ex)
             {
-                LastResult.ErroMessage = ex.Message;
+                LastResult.ErrorMessage = ex.Message;
                 return null;
             }
         }
@@ -46,7 +46,7 @@ namespace WebBusinessLayer
         {
             try
             {
-                using (var dbContext = DbHelper.GetConection())
+                using (var dbContext = DbWeb.GetConection())
                 {
                     var venta = dbContext.Query<ventaDto>(QueryHelper.GetQuery(nameof(GetIdVenta)), new {tipoDoc, serie, correlativo, fecha, total}).FirstOrDefault();
                     LastResult.Success = true;
@@ -55,7 +55,7 @@ namespace WebBusinessLayer
             }
             catch (Exception ex)
             {
-                LastResult.ErroMessage = ex.Message;
+                LastResult.ErrorMessage = ex.Message;
                 return null;
             }
         }
@@ -69,7 +69,7 @@ namespace WebBusinessLayer
         {
             try
             {
-                using (var dbContext = DbHelper.GetConection())
+                using (var dbContext = DbWeb.GetConection())
                 {
                     var venta = dbContext.Query<ventaDto>(QueryHelper.GetQuery(nameof(GetVenta)), new { idVenta }).FirstOrDefault();
                     LastResult.Success = true;
@@ -78,7 +78,7 @@ namespace WebBusinessLayer
             }
             catch (Exception ex)
             {
-                LastResult.ErroMessage = ex.Message;
+                LastResult.ErrorMessage = ex.Message;
                 return null;
             }
         }

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using WebBusinessLayer.Querys;
-using WebDataModel;
+using WebBusinessLayer.Security;
 using WebDataModel.Entities;
 
 namespace WebBusinessLayer
@@ -23,7 +20,7 @@ namespace WebBusinessLayer
         {
             try
             {
-                using (var db = DbHelper.GetConection())
+                using (var db = DbWeb.GetConection())
                 {
                     var config = db.Query<configuracionfacturacionDto>("SELECT * FROM configuracionfacturacion").First();
                     LastResult.Success = true;
@@ -32,7 +29,7 @@ namespace WebBusinessLayer
             }
             catch (Exception ex)
             {
-                LastResult.ErroMessage = ex.Message;
+                LastResult.ErrorMessage = ex.Message;
                 return null;
             }
         }
@@ -45,7 +42,7 @@ namespace WebBusinessLayer
         {
             try
             {
-                using (var db = DbHelper.GetConection())
+                using (var db = DbWeb.GetConection())
                 {
                     var config = db.Query<configuracionfacturacionDto>(QueryHelper.GetQuery(nameof(GetLite))).First();
                     LastResult.Success = true;
@@ -54,7 +51,7 @@ namespace WebBusinessLayer
             }
             catch (Exception ex)
             {
-                LastResult.ErroMessage = ex.Message;
+                LastResult.ErrorMessage = ex.Message;
                 return null;
             }
         }

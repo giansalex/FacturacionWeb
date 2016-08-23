@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using WebBillPanel.Models;
 using WebBusinessLayer;
+using WebBusinessLayer.Security;
 
 namespace WebBillPanel.Controllers
 {
@@ -10,6 +11,7 @@ namespace WebBillPanel.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            ManagerConfiguration.Save(DataBases.SqlServer, "Data Source=localhost;Initial Catalog=20505310072;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=123456");
             return View();
         }
 

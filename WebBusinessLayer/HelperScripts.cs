@@ -4,7 +4,7 @@ using System.Linq;
 using Dapper;
 using WebBusinessLayer.Querys;
 using WebBusinessLayer.Report;
-using WebDataModel;
+using WebBusinessLayer.Security;
 using WebDataModel.Entities;
 
 namespace WebBusinessLayer
@@ -21,7 +21,7 @@ namespace WebBusinessLayer
         {
             try
             {
-                using (var con = DbHelper.GetConection())
+                using (var con = DbWeb.GetConection())
                 {
                     var res = con.Query<ventaDto, clienteDto, string, Tuple<ventaDto, clienteDto, decimal>>(
                         QueryHelper.GetQuery(nameof(GetVentaCliente)), (a, b, igv) => new Tuple<ventaDto, clienteDto, decimal>(a, b , decimal.Parse(igv ?? "18") / 100),
@@ -32,7 +32,7 @@ namespace WebBusinessLayer
             }
             catch (Exception ex)
             {
-                LastResult.ErroMessage = ex.Message;
+                LastResult.ErrorMessage = ex.Message;
                 return null;
             }
         }
@@ -47,7 +47,7 @@ namespace WebBusinessLayer
         {
             try
             {
-                using (var con = DbHelper.GetConection())
+                using (var con = DbWeb.GetConection())
                 {
                     var res = con.Query<ventadetalleDto, string, string, Tuple <ventadetalleDto, string, short>>(
                         QueryHelper.GetQuery(nameof(GetVentaDetalles)), 
@@ -58,7 +58,7 @@ namespace WebBusinessLayer
             }
             catch (Exception ex)
             {
-                LastResult.ErroMessage = ex.Message;
+                LastResult.ErrorMessage = ex.Message;
                 return null;
             }
         }
@@ -73,7 +73,7 @@ namespace WebBusinessLayer
         {
             try
             {
-                using (var con = DbHelper.GetConection())
+                using (var con = DbWeb.GetConection())
                 {
                     var isc = con.Query<productoiscDto>(
                             QueryHelper.GetQuery(nameof(GetIscFromDetail)),
@@ -84,7 +84,7 @@ namespace WebBusinessLayer
             }
             catch (Exception ex)
             {
-                LastResult.ErroMessage = ex.Message;
+                LastResult.ErrorMessage = ex.Message;
                 return null;
             }
         }
@@ -93,7 +93,7 @@ namespace WebBusinessLayer
         {
             try
             {
-                using (var con = DbHelper.GetConection())
+                using (var con = DbWeb.GetConection())
                 {
                     var res = con.Query<ventaDto, ventadetalleDto, clienteDto, string, string, ReporteDocumentoFactura>(
                                 QueryHelper.GetQuery(nameof(GetReporteInvoice)), (venta, detalle, c, unidad, igv) => new ReporteDocumentoFactura
@@ -131,7 +131,7 @@ namespace WebBusinessLayer
             }
             catch (Exception ex)
             {
-                LastResult.ErroMessage = ex.Message;
+                LastResult.ErrorMessage = ex.Message;
                 return null;
             }
         }
