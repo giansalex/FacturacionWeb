@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WebDataModel;
 
 namespace WebBusinessLayer.Security
 {
@@ -16,25 +13,31 @@ namespace WebBusinessLayer.Security
         /// Gets the Current bd.
         /// </summary>
         /// <value>The bd.</value>
-        public static DataBases Bd => (DataBases)Enum.Parse(typeof(DataBases), ConfigurationManager.AppSettings["TipoDb"]);
+        public static DataBases Bd => (DataBases)Enum.Parse(typeof(DataBases), ConfigurationManager.ConnectionStrings["xConect"].ProviderName);
         /// <summary>
         /// Gets the conection string.
         /// </summary>
         /// <value>The conection string.</value>
-        public static string ConectionString => ConfigurationManager.AppSettings["StrConection"];
+        public static string ConectionString => ConfigurationManager.ConnectionStrings["xConect"].ConnectionString;
         //postgres Server=localhost;Port=5432;Database=20100070970;User Id=postgres;Password=123456;
 
         /// <summary>
         /// Save the specified type database.
         /// </summary>
         /// <param name="typeDb">The type database.</param>
-        /// <param name="conectionString">The conection string.</param>
-        public static void Save(DataBases typeDb, string conectionString)
+        public static void Save(DataBases typeDb, string host, string user, string pass, string db)
         {
-            var config = ConfigurationManager.AppSettings;
-
-            config["TipoDb"] = typeDb.ToString();
-            config["StrConection"] = conectionString;
+            //var config = ConfigurationManager.AppSettings;
+            var config = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
+            var conect = config.ConnectionStrings.ConnectionStrings["xConect"];
+            conect.ConnectionString = typeDb == DataBases.SqlServer 
+                ? DbHelper.CreateStringConectionSqlServer(host, db, user, pass) 
+                : DbHelper.CreateStringConectionPostgreSql(host, db, user, pass);
+            conect.ProviderName = typeDb.ToString();
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("connectionStrings");
+            //config["TipoDb"] = typeDb.ToString();
+            //config["StrConection"] = conectionString;
             //config.Settings["TipoDb"].Value = typeDb.ToString();
             //config.AppSettings.Settings["StrConection"].Value = conectionString;
             //config.Save(ConfigurationSaveMode.Modified);

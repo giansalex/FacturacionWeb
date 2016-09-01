@@ -28,7 +28,7 @@ namespace WebBusinessLayer.Security
     /// <summary>
     /// Enum Tipo de Base de Datos
     /// </summary>
-    public enum DataBases
+    public enum DataBases : byte
     {
         /// <summary>
         /// The SQL server

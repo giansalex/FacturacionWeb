@@ -52,7 +52,7 @@
     </div>
     <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
         <div class="mdl-card__supporting-text">
-            <h4>@(@cliente.i_IdTipoIdentificacion == 1 ? "DNI:" : "RUC:") @cliente.v_NroDocIdentificacion</h4>
+            <h4>@(cliente.i_IdTipoIdentificacion == 1 ? "DNI:" : "RUC:") @cliente.v_NroDocIdentificacion</h4>
             @(string.Join(" ", cliente.v_PrimerNombre, cliente.v_SegundoNombre, cliente.v_ApePaterno, cliente.v_ApeMaterno))
             <br/>
             @cliente.v_RazonSocial @cliente.v_DirecPrincipal

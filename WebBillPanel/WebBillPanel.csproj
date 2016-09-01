@@ -158,6 +158,8 @@
     <Content Include="Views\Home\LoginDoc.cshtml" />
     <Content Include="Views\Panel\Index.cshtml" />
     <Content Include="Views\Panel\OneDocument.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Panel\SaveConfig.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

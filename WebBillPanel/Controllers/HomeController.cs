@@ -2,17 +2,46 @@
 using System.Web.Mvc;
 using WebBillPanel.Models;
 using WebBusinessLayer;
-using WebBusinessLayer.Security;
 
 namespace WebBillPanel.Controllers
 {
     public class HomeController : Controller
     {
+        #region Methods Controller
         // GET: Home
         public ActionResult Index()
         {
-            ManagerConfiguration.Save(DataBases.SqlServer, "Data Source=localhost;Initial Catalog=20505310072;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=123456");
             return View();
+        }
+
+        public ActionResult Admin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Admin([Bind(Include = "UserName,Password")] ClienteCredencial admin)
+        {
+            if (ModelState.IsValid)
+            {
+                var cbl = new ClienteBl();
+                var id = cbl.GetIdClient(admin.UserName, admin.Password);
+                if (id != null)
+                {
+                    Session["_idAdmin__"] = id;
+                    return RedirectToAction("SaveConfig", "Panel");
+                }
+                ViewBag.NoValid = true;
+            }
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogoutAdmin()
+        {
+            Session["_idAdmin__"] = null;
+            return RedirectToAction("Admin", "Home");
         }
 
         // GET: Login User
@@ -64,7 +93,9 @@ namespace WebBillPanel.Controllers
             ViewBag.DocItems = GetDocs();
             return View();
         }
+        #endregion
 
+        #region Private Methods
         /// <summary>
         /// Obtiene documentos electronicos disponibles.
         /// </summary>
@@ -96,5 +127,6 @@ namespace WebBillPanel.Controllers
                 }
             };
         }
+        #endregion
     }
 }

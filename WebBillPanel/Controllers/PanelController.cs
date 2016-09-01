@@ -2,7 +2,9 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using WebBusinessLayer;
+using WebBusinessLayer.Security;
 using WebDocs;
 
 namespace WebBillPanel.Controllers
@@ -96,6 +98,36 @@ namespace WebBillPanel.Controllers
                 // ignored
             }
             return null;
+        }
+
+        public ActionResult SaveConfig()
+        {
+            var idVenta = Session["_idAdmin__"];
+            if (idVenta == null) return RedirectToAction("Admin", "Home");
+            ViewBag.IsSql = ManagerConfiguration.Bd == DataBases.SqlServer;
+            ViewBag.Cadena = ManagerConfiguration.ConectionString;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveConfig(string tipo,string server,string user, string password, string database)
+        {
+            var idVenta = Session["_idAdmin__"];
+            if (idVenta == null) return RedirectToAction("Admin", "Home");
+            DataBases db;
+            if (Enum.TryParse(tipo, out db))
+            {
+                ManagerConfiguration.Save(db, server,user, password, database);
+                ViewBag.IsValid = true;
+                ViewBag.Mensaje = "Los cambios se guardaron correctamente.";
+            }
+            else
+            {
+                ViewBag.IsValid = false;
+                ViewBag.Mensaje = "El tipo de Base de Datos no es aceptado";
+            }
+            ViewBag.IsSql = db == DataBases.SqlServer;;
+            return View();
         }
     }
 

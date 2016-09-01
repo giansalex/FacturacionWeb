@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Configuracion";
+}
+@section HeadSite
+{
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.css"/>
+    <style>
+        div .container {
+            padding: 10.5rem 0
+        }
+        #frmSave {
+            padding: 4rem 3rem
+        }
+    </style>
+}
+@section BottomSite
+{
+    <script src="~/Scripts/bootstrap.js"></script>
+}
+@using (Html.BeginForm("LogoutAdmin", "Home", FormMethod.Post, new { id = "formLogout" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="container">
+    <div style="margin: auto">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Configuracion
+                <button id="btnLogout" onclick="javascript: document.getElementById('formLogout').submit();" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+                        style="float: right; margin-top: -0.5rem">
+                    <i class="material-icons">power_settings_new</i>
+                </button>
+                <div class="mdl-tooltip" for="btnLogout">
+                    Cerrar Sesión
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("SaveConfig", "Panel", FormMethod.Post, new {@class = "form-horizontal", id = "frmSave"}))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="tipo" class="control-label col-sm-2">Base de Datos</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="tipo" name="tipo">
+                                <option value="SqlServer" @(ViewBag.IsSql ? "selected" : "")>SQL SERVER</option>
+                                <option value="PostgreSql" @(ViewBag.IsSql ? "" : "selected")>POSTGRESQL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="server" class="control-label col-sm-2">Servidor</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="server" name="server">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="user" class="control-label col-sm-2">Usuario</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="user" name="user">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label col-sm-2">PassWord</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="password" id="password" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="database" class="control-label col-sm-2">DataBase</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="database" name="database">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+@if (ViewBag.IsValid != null)
+{
+    <div class="alert @(ViewBag.IsValid ? "alert-success" : "alert-danger")">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        @ViewBag.Mensaje
+    </div>
+}   
+    </div>
+</div>
+
