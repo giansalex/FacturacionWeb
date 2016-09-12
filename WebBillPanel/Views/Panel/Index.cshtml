@@ -7,29 +7,20 @@
 }
 @section HeadSite
 {
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css"/>
     <style>
-        section.section--center {
-            max-width: 860px;
-        }
-        div.table-center {
-            text-align: center;
-            padding: 20px 0;
-        }
-        section header i.iconUser--center {
-            margin-top: 40%;
-        }
-        section .img-Fondo {
+        .img-FondoUser {
             background: url('http://uniconenc.com/default/img/mobilen/img/sub_3/dc.jpg') center/cover;
         }
-        section.section--footer {
-            padding: 64px 0;
-            margin: 0 -8px -8px -8px;
-            background: whitesmoke;
+        .thead-inverse th {
+          color: #fff;
+          background-color: #373a3c;
         }
     </style>
 }
 @section BottomSite
 {
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <script>
         $(document)
             .ready(function() {
@@ -46,96 +37,83 @@
 {
     @Html.AntiForgeryToken()
 }
-<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--6dp">
-    <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone img-Fondo">
-        <!--<i class="material-icons mdl-list__item-avatar iconUser--center">account_circle</i>-->
-    </div>
-    <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
-        <div class="mdl-card__supporting-text">
-            <h4>@(cliente.i_IdTipoIdentificacion == 1 ? "DNI:" : "RUC:") @cliente.v_NroDocIdentificacion</h4>
-            @(string.Join(" ", cliente.v_PrimerNombre, cliente.v_SegundoNombre, cliente.v_ApePaterno, cliente.v_ApeMaterno))
-            <br/>
-            @cliente.v_RazonSocial @cliente.v_DirecPrincipal
-            <br/>
-        </div>
-        <div class="mdl-card__actions mdl-card--border" style="margin-top: 20px">
-            <a href="@cliente.v_PaginaWeb" class="mdl-button mdl-button--colored">Ir a mi sitio</a>
-        </div>
-        <div class="mdl-card__menu">
-            <button id="btnLogout" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                <i class="material-icons">power_settings_new</i>
-            </button>
-            <div class="mdl-tooltip" for="btnLogout">
-                Cerrar Sesión
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--2-offset-desktop mdl-cell--8-col">
+        <div class="mdl-grid mdl-grid--no-spacing mdl-shadow--6dp">
+            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone img-FondoUser">
+                <!--<i class="material-icons mdl-list__item-avatar iconUser--center">account_circle</i>-->
+            </div>
+            <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+                <div class="mdl-card__supporting-text">
+                    <h4>@(cliente.i_IdTipoIdentificacion == 1 ? "DNI:" : "RUC:") @cliente.v_NroDocIdentificacion</h4>
+                    @(string.Join(" ", cliente.v_PrimerNombre, cliente.v_SegundoNombre, cliente.v_ApePaterno, cliente.v_ApeMaterno))
+                    <span class="mdl-typography--headline" style="font-size: 14px;">@cliente.v_RazonSocial @cliente.v_DirecPrincipal</span>
+                    <br />
+                </div>
+                <div class="mdl-card__actions mdl-card--border" style="position: absolute;
+    bottom: 0;">
+                    <a href="@cliente.v_PaginaWeb" class="mdl-button mdl-button--colored">Ir a mi sitio</a>
+                </div>
+                <div class="mdl-card__menu">
+                    <button id="btnLogout" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                        <i class="material-icons">power_settings_new</i>
+                    </button>
+                    <div class="mdl-tooltip" for="btnLogout">
+                        Cerrar Sesión
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+
 <br/>
 <h3 class="mdl-layout-title" style="padding: 10px; text-align: center"><span class="mdl-badge" data-badge="@Model.Count()">Comprobantes Electrónicos</span></h3>
-<div class="table-center">
-    <table class="mdl-data-table mdl-js-data-table mdl-shadow--8dp" style="margin: auto; width: 860px">
-        <thead>
-        <tr>
-            <th class="mdl-data-table__cell--non-numeric">Serie</th>
-            <th class="mdl-data-table__cell--non-numeric">Fecha</th>
-            <th>Cantidad</th>
-            <th>PDF</th>
-            <th>XML</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td class="mdl-data-table__cell--non-numeric">@item.v_SerieDocumento - @item.v_CorrelativoDocumento</td>
-                <td class="mdl-data-table__cell--non-numeric">@item.t_FechaRegistro.Value.ToShortDateString()</td>
-                <td>S/.@item.d_Total</td>
-                <td>
-                    @{
-                        var id = Encryptor.Encode(item.v_IdVenta);
-                    }
-                    <button id="btnDownPdf_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
-                            onclick="location.href = '@Url.Action("gen-pdf", "Panel", new {id, pred="uxsr"})'">
-                        <i class="material-icons">cloud_download</i>
-                    </button>
-                    <div class="mdl-tooltip" for="btnDownPdf_@item.v_CorrelativoDocumento">
-                        Descargar PDF
-                    </div>
-                </td>
-                <td>
-                    <button id="btnDownXml_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
-                            onclick="location.href = '@Url.Action("gen-xml", "Panel", new {id, pred="uxsr"})'">
-                        <i class="material-icons">file_download</i>
-                    </button>
-                    <div class="mdl-tooltip" for="btnDownXml_@item.v_CorrelativoDocumento">
-                        Descargar XML
-                    </div>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--2-offset-desktop mdl-cell--8-col">
+        <table class="table table-hover">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Serie</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>PDF</th>
+                    <th>XML</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.v_SerieDocumento - @item.v_CorrelativoDocumento</td>
+                        <td>@item.t_FechaRegistro.Value.ToShortDateString()</td>
+                        <td>S/.@item.d_Total</td>
+                        <td>
+                            @{
+                                var id = Encryptor.Encode(item.v_IdVenta);
+                            }
+                            <button id="btnDownPdf_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                                    onclick="location.href = '@Url.Action("gen-pdf", "Panel", new {id, pred = "uxsr"})'">
+                                <i class="material-icons">cloud_download</i>
+                            </button>
+                            <div class="mdl-tooltip" for="btnDownPdf_@item.v_CorrelativoDocumento">
+                                Descargar PDF
+                            </div>
+                        </td>
+                        <td>
+                            <button id="btnDownXml_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                                    onclick="location.href ='@Url.Action("gen-xml", "Panel", new {id, pred = "uxsr"})'">
+                                <i class="material-icons">file_download</i>
+                            </button>
+                            <div class="mdl-tooltip" for="btnDownXml_@item.v_CorrelativoDocumento">
+                                Descargar XML
+                            </div>
+                        </td>
+                    </tr>
+                 }
+            </tbody>
+        </table>
+    </div>
 </div>
+
 <br/>
-<section class="section--footer mdl-grid">
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-        <div class="mdl-color--accent" style="width: 100px; height: 100px; border-radius: 50px; margin: 8px 32px; text-align: center">
-            <i class="material-icons" style="margin-top: 36%; color:white">book</i>
-        </div>
-    </div>
-    <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-        <h5>Normas</h5>
-        Ver la resolución <a href="http://contenido.app.sunat.gob.pe/insc/NormasLegales/Res+Superintend/RS_185_2015_CDpelectronicos.pdf">Resolución de Superintendencia N° 185-2015/SUNAT</a>
-        sobre Comprobantes Electronicos.(Factura, Boleta, Notas de Credito y Notas de Debito) 
-    </div>
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-        <div class="mdl-color--accent" style="width: 100px; height: 100px; border-radius: 50px; margin: 8px 32px; text-align: center">
-            <i class="material-icons" style="margin-top: 36%; color:white">receipt</i>
-        </div>
-    </div>
-    <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-        <h5>Conservacion y Disposicion</h5>
-        Debe poner a disposición del adquirente, a través de una página web, por el plazo de un año, los comprobantes de pago y notas electrónicas entregadas, para poder ser descargados, leídos o impresos. 
-    </div>
-</section>

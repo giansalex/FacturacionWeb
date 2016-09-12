@@ -21,35 +21,11 @@
 }
 @section HeadSite
 {
-<link rel="stylesheet" href="~/Content/bootstrap.css" />
-<link rel="stylesheet" href="~/Content/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.css"/>
     <style>
-        .mdl-card--width {
-            width: 30%
-        }
-        .demo-card-image.mdl-card {
-            background: url('http://cache2.asset-cache.net/xd/472867625.jpg?v=1&c=IWSAsset&k=2&d=62CA815BFB1CE48044F7A0DD2160E3CED1DB44E5599D888A4B8AF263FC1C6BC1EAAFC25BA74C92BF') center;
-            margin: auto
-        }
-        .demo-card-image > .mdl-card__actions {
-            height: 52px;
-            padding: 16px;
-            background: #000000;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .demo-card-image__filename {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .detail-card {
-            margin: auto;
-        }
-        .detail--header-card {
-            color: #fff;
-            height: 100px;
-            /*background: url('http://www.automobileinsurance4less.com/images/pay_bill.jpg') center;*/
+        .row-pd {
+            padding: 2.8rem 2rem;
         }
     </style>
 }
@@ -63,9 +39,9 @@
 {
     @Html.AntiForgeryToken()
 }
-<div class="container">
-    <div class="col-md-4">
-        <div class="panel panel-default">
+<div class="row row-pd">
+    <div class="col-xs-12 col-md-4">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 Informacion del Emisor
                 <button id="btnLogout" onclick="javascript: document.getElementById('formLogout').submit();" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
@@ -81,12 +57,12 @@
                 @SetInfo("Razon Social", config.v_RazonSocial)<br />
                 @SetInfo("Nombre Comercial", config.v_NombreComercial)<br />
                 @SetInfo("Direccion", config.v_Domicilio)<br />
-                @SetInfo("Resolucion SUNTA", config.v_Resolucion)
+                @SetInfo("Resolucion SUNAT", config.v_Resolucion)
             </div>
         </div>
     </div>
-    <div class="col-md-8">
-        <div class="panel panel-primary">
+    <div class="col-xs-12 col-md-8">
+        <div class="panel panel-default">
             <div class="panel-heading" style="font-weight: bold">
                 @switch (Model.i_IdTipoDocumento)
                 {

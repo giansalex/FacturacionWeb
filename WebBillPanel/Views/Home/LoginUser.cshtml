@@ -6,31 +6,31 @@
 {
     <script>
         $(document).ready(function() {
-                $('#btnIngresar').click(function () {
-                    $(this).hide();
-                    $('#loadingC').show();
-                    setTimeout(function () {
-                        $("#frmLogin").submit();
-                    }, 1500);
-                });
-                if (document.querySelector('#snack_loginDoc') != null)
-                    setTimeout(function () {
-                        var snackbarContainer = document.querySelector('#snack_loginDoc');
-                        var handler = function (event) {
-                            $('#UserName').focus();
-                        };
-                        var data = {
-                            message: 'Usuario no encontrado!',
-                            timeout: 2000,
-                            actionHandler: handler,
-                            actionText: 'Retry'
-                        }
-                        snackbarContainer.MaterialSnackbar.showSnackbar(data);
-                    }, 500);
+            $('#btnIngresar').click(function () {
+                $(this).hide();
+                $('#loadingC').show();
+                setTimeout(function () {
+                    $("#frmLogin").submit();
+                }, 1500);
+            });
+            if (document.querySelector('#snack_loginDoc') != null)
+                setTimeout(function () {
+                    var snackbarContainer = document.querySelector('#snack_loginDoc');
+                    var handler = function (event) {
+                        $('#UserName').focus();
+                    };
+                    var data = {
+                        message: 'Usuario no encontrado!',
+                        timeout: 2000,
+                        actionHandler: handler,
+                        actionText: 'Retry'
+                    }
+                    snackbarContainer.MaterialSnackbar.showSnackbar(data);
+                }, 500);
         });
     </script>
 }
-<div style="text-align: center; padding: 10% 0">
+<div style="text-align: center; padding: 130px 0">
     @using (Html.BeginForm("LoginUser", "Home", FormMethod.Post, new {role = "form", id = "frmLogin"}))
     {
         @Html.AntiForgeryToken()
