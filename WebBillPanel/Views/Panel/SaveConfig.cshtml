@@ -1,92 +1,88 @@
 ﻿@{
     ViewBag.Title = "Configuracion";
 }
-@section HeadSite
-{
-    <link rel="stylesheet" href="~/Content/bootstrap.css" />
-    <link rel="stylesheet" href="~/Content/bootstrap-theme.css"/>
-    <style>
-        div .container {
-            padding: 10.5rem 0
-        }
-        #frmSave {
-            padding: 4rem 3rem
-        }
-    </style>
-}
-@section BottomSite
-{
-    <script src="~/Scripts/bootstrap.js"></script>
-}
 @using (Html.BeginForm("LogoutAdmin", "Home", FormMethod.Post, new { id = "formLogout" }))
 {
     @Html.AntiForgeryToken()
 }
-<div class="container">
-    <div style="margin: auto" class="col-xs-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Configuracion
-                <button id="btnLogout" onclick="javascript: document.getElementById('formLogout').submit();" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-                        style="float: right; margin-top: -0.5rem">
-                    <i class="material-icons">power_settings_new</i>
-                </button>
-                <div class="mdl-tooltip" for="btnLogout">
-                    Cerrar Sesión
-                </div>
-            </div>
-            <div class="panel-body">
-                @using (Html.BeginForm("SaveConfig", "Panel", FormMethod.Post, new {@class = "form-horizontal", id = "frmSave"}))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="form-group">
-                        <label for="tipo" class="control-label col-sm-2">Base de Datos</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" id="tipo" name="tipo">
-                                <option value="SqlServer" @(ViewBag.IsSql ? "selected" : "")>SQL SERVER</option>
-                                <option value="PostgreSql" @(ViewBag.IsSql ? "" : "selected")>POSTGRESQL</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="server" class="control-label col-sm-2">Servidor</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" id="server" name="server">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="user" class="control-label col-sm-2">Usuario</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" id="user" name="user">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="control-label col-sm-2">PassWord</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="password" id="password" name="password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="database" class="control-label col-sm-2">DataBase</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" id="database" name="database">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#mdb-select').material_select();
+        });
+    </script>
+}
+@section Styles
+{
+    <style>
+    .config-parent {
+        height: 36rem;
+    }
+
+    div .config-width {
+        width: 25rem;
+    }
+</style>
+}
 @if (ViewBag.IsValid != null)
 {
-    <div class="alert @(ViewBag.IsValid ? "alert-success" : "alert-danger")">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        @ViewBag.Mensaje
+    <div style="margin-bottom: 3rem" class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="alert @(ViewBag.IsValid ? "alert-success" : "alert-danger")">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                @ViewBag.Mensaje
+            </div>
+        </div>
     </div>
-}   
-    </div>
+}
+<div class="config-parent flex-center">
+    @using (Html.BeginForm("SaveConfig", "Panel", FormMethod.Post, new { autocomplete = "off" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="card config-width">
+            <div class="card-block">
+                <!--Header-->
+                <div class="form-header blue-gradient">
+                    <h3>
+                        <i class="fa fa-pencil"></i> Editar:
+                    </h3>
+                </div>
+                <div class="md-form">
+                    <select id="mdb-select" name="tipo">
+                        <option value="SqlServer" @(ViewBag.IsSql ? "selected" : "")>SQL SERVER</option>
+                        <option value="PostgreSql" @(ViewBag.IsSql ? "" : "selected")>POSTGRESQL</option>
+                    </select>
+                    <label for="mdb-select">Tipo</label>
+                </div>
+                <!--Body-->
+                <div class="md-form">
+                    <i class="fa fa-server prefix"></i>
+                    <input type="text" id="server" class="form-control" name="server">
+                    <label for="server">Servidor</label>
+                </div>
+                <div class="md-form">
+                    <i class="fa fa-user prefix"></i>
+                    <input type="text" id="user" class="form-control" name="user">
+                    <label for="user">Usuario</label>
+                </div>
+
+                <div class="md-form">
+                    <i class="fa fa-lock prefix"></i>
+                    <input type="password" id="password" class="form-control" name="password">
+                    <label for="password">PassWord</label>
+                </div>
+                <div class="md-form">
+                    <i class="fa fa-database prefix"></i>
+                    <input type="text" id="database" class="form-control" name="database">
+                    <label for="database">Database</label>
+                </div>
+                <div class="text-xs-center">
+                    <button class="btn btn-indigo btn-rounded">Guardar</button>
+                </div>
+
+            </div>
+        </div>
+    }
 </div>
 

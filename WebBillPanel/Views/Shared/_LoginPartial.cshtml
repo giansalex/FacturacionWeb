@@ -1,0 +1,95 @@
+﻿@using WebBusinessLayer
+<!-- Logo -->
+<li>
+    <div class="logo-wrapper sn-ad-avatar-wrapper">
+        @if (Session["_idUser__"] != null)
+        {
+            var cliente = new ClienteBl().GetClient((string) Session["_idUser__"]);
+            <img src="https://www.worldskills.org/components/angular-worldskills-utils/images/user.png" class="img-fluid img-circle">
+            <div class="rgba-stylish-strong">
+                @if (cliente != null)
+                {
+                    <p class="user white-text">
+                        @cliente.v_NroDocIdentificacion <br> @cliente.v_RazonSocial
+                    </p>
+                }
+            </div>
+        }
+        else if (Session["_idVenta__"] != null)
+        {
+            <img src="https://www.worldskills.org/components/angular-worldskills-utils/images/user.png" class="img-fluid img-circle">
+            <div class="rgba-stylish-strong">
+                <p class="user white-text">
+                    Cliente<br> Sesion Iniciada.
+                </p>
+            </div>
+        }
+        else if (Session["_idAdmin__"] != null)
+        {
+            <img src="https://www.worldskills.org/components/angular-worldskills-utils/images/user.png" class="img-fluid img-circle">
+            <div class="rgba-stylish-strong">
+                <p class="user white-text">
+                    Admin<br> Sesion Iniciada.
+                </p>
+            </div>
+        }
+        else
+        {
+            <img src="http://www.levelup.com/images/avatars/2.png" class="img-fluid img-circle">
+            <div class="rgba-stylish-strong">
+                <p class="user white-text">
+                    Anonimo<br> Session no iniciada.
+                </p>
+            </div>
+        }
+    </div>
+</li>
+<!--/. Logo -->
+<!-- Side navigation links -->
+<ul class="collapsible collapsible-accordion">
+
+    @if (Session["_idUser__"] == null && Session["_idVenta__"] == null && Session["_idAdmin__"] == null)
+    {
+    <li>
+        <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-home"></i> Contactar<i class="fa fa-angle-down rotate-icon"></i></a>
+        <div class="collapsible-body">
+            <ul>
+                <li>
+                    <a href="#" class="waves-effect">Administrador</a>
+                </li>
+                <li>
+                    <a href="#" class="waves-effect">Proveedor</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    }
+    else
+    {
+    <li>
+        <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-home"></i> Dashboard<i class="fa fa-angle-down rotate-icon"></i></a>
+        <div class="collapsible-body">
+            <ul>
+                <li>
+                    <a href="#" class="waves-effect">Analytics dashboard</a>
+                </li>
+                <li>
+                    <a href="#" class="waves-effect">Social wall</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-envelope-o"></i> Email<i class="fa fa-angle-down rotate-icon"></i></a>
+        <div class="collapsible-body">
+            <ul>
+                <li>
+                    <a href="mailto:admin@tisoluciones.net" class="waves-effect">Inbox</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    }
+ 
+</ul>
+<!--/. Side navigation links -->

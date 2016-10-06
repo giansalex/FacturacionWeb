@@ -1,73 +1,53 @@
 ﻿@{
     ViewBag.Title = "Login";
 }
-@section HeadSite{
+@section Styles
+{
     <style>
-        .pcss-card-wide.mdl-card {
-            width: 512px;
-            margin: 0 auto;
+        .welcome-parent {
+            height: 40rem;
         }
-        .pcss-card-wide > .mdl-card__title {
-            color: #fff;
-            height: 176px;
-            background: url('http://cdn2.hubspot.net/hub/136970/file-17599875-jpg/images/modern_billing_department.jpg') center / cover;
-        }
-        .pcss-card-wide > .mdl-card__menu {
-            color: #fff;
+
+        div .welcome-width {
+            width: 25rem;
         }
     </style>
 }
-@section BottomSite
-{
-    <script>
-        $(window).ready(function () {
-            var x = $(window).width();
-            if (x < 768) {
-                $("#card1").width(x * 0.9);
-            }
-        });
-    </script>
-}
-<div style="text-align: center; padding: 60px 0">
-    <div class="pcss-card-wide mdl-card mdl-shadow--2dp" id="card1">
-        <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">Bienvenido</h2>
-        </div>
-        <div class="mdl-card__supporting-text">
-            A continuacion eliga una de las opciones, para visualizar su
-            comprobante electronico.
-        </div>
-        <div>
-            <div style="text-align: center">
-                <ul class="mdl-list" style="width: 50%; margin: auto">
-                    <li class="mdl-list__item">
-                        <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" href="@Url.Action("LoginDoc", "Home")">
-                            <i class="material-icons">navigate_next</i>
-                        </a>
-                        <span class="mdl-list__item-primary-content mdl-card__supporting-text">
-                            Por Comprobante
-                        </span>
-                    </li>
-                    <li class="mdl-list__item">
-                        <a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" href="@Url.Action("LoginUser", "Home")">
-                            <i class="material-icons">navigate_next</i>
-                        </a>
-                        <span class="mdl-list__item-primary-content mdl-card__supporting-text">
-                            Por RUC O DNI
-                        </span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Contactar
+<div class="welcome-parent flex-center">
+    <!--Card-->
+    <div class="card welcome-width">
+
+        <!--Card image-->
+        <div class="view overlay hm-white-slight">
+            <img src="http://mdbootstrap.com/images/reg/reg%20(3).jpg" class="img-fluid" alt="Login">
+            <a>
+                <div class="mask"></div>
             </a>
         </div>
-        <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                <i class="material-icons">share</i>
-            </button>
+        <!--/.Card image-->
+        <!--Button-->
+        @*<a class="btn-floating btn-action"><i class="fa fa-chevron-right"></i></a>*@
+
+        <!--Card content-->
+        <div class="card-block">
+            <!--Title-->
+            <h4 class="card-title font-weight-bold">Bienvenido</h4>
+            <p class="card-text">Eliga una opcion para visualizar su comprobante electronico.</p>
+            <hr />
+            <!--Text-->
+            <div>
+                <ul>
+                    <li class="pull-left">
+                        <a class="btn-floating btn-small special-color" href="@Url.Action("LoginDoc", "Home")"><i class="fa fa-chevron-right"></i></a><span class="card-text m-l-1">Por Comprobante</span>
+                    </li>
+
+                    <li class="pull-left">
+                        <a class="btn-floating btn-small special-color" href="@Url.Action("LoginUser", "Home")"><i class="fa fa-chevron-right"></i></a><span class="card-text m-l-1">Por RUC o DNI</span>
+                    </li>
+                </ul>
+            </div>         
         </div>
+        <!--/.Card content-->
     </div>
+    <!--/.Card-->
 </div>

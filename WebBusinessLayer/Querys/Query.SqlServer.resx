@@ -121,7 +121,7 @@
     <value>SELECT * FROM cliente WHERE v_IdCliente = @id</value>
   </data>
   <data name="GetIdClient" xml:space="preserve">
-    <value>SELECT v_IdCliente FROM cliente WHERE v_NroDocIdentificacion = @id</value>
+    <value>SELECT v_IdCliente FROM cliente WHERE v_NroDocIdentificacion = @id AND v_Password=@pass</value>
   </data>
   <data name="GetIdVenta" xml:space="preserve">
     <value>SELECT v_IdVenta FROM venta WHERE i_IdTipoDocumento=@tipoDoc AND  v_SerieDocumento=@serie AND v_CorrelativoDocumento=@correlativo AND t_FechaRegistro=@fecha AND d_Total=@total</value>

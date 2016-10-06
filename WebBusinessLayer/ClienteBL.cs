@@ -16,7 +16,7 @@ namespace WebBusinessLayer
                 using (var db = DbWeb.GetConection())
                 {
                     var user = db.Query<clienteDto>(QueryHelper.GetQuery(nameof(GetIdClient)), 
-                        new {id = pstrDocumento }).FirstOrDefault();
+                        new {id = pstrDocumento, pass = pstrClave }).FirstOrDefault();
                     LastResult.Success = true;
                     return user?.v_IdCliente;
                 }

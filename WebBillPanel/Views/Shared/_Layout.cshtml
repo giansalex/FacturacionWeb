@@ -1,74 +1,103 @@
 ﻿@{
-    var Title = "Facturacion Electronica";
+    var Title = "Facturación Electrónica";
     var Empresa = "TI Soluciones";
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@ViewBag.Title - @Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700,700italic" type="text/css">
-   @* <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-red.min.css" />*@
-    <link rel="stylesheet" href="~/Content/mdl1.2.1/material.css"/>
-    @*<script src="~/Scripts/jquery-1.9.1.intellisense.js"></script>*@
-    @if (IsSectionDefined("HeadSite"))
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/mdb/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="~/Content/mdb/mdbpro.min.css" rel="stylesheet">
+
+    @if (IsSectionDefined("Styles"))
     {
-        @RenderSection("HeadSite")
+        @RenderSection("Styles")
     }
+
 </head>
-<body>
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-            <!-- Title -->
-            <span class="mdl-layout-title">@Title</span>
-            <div class="mdl-layout-spacer"></div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                  mdl-textfield--floating-label mdl-textfield--align-right">
-                <label class="mdl-button mdl-js-button mdl-button--icon"
-                       for="search-input">
-                    <i class="material-icons">search</i>
-                </label>
-                <div class="mdl-textfield__expandable-holder">
-                    <input class="mdl-textfield__input" type="text" name="sample"
-                           id="search-input">
-                </div>
-            </div>
+<body class="fixed-sn graphite-skin">
+<header>
+
+    <!-- Sidebar navigation -->
+    <ul id="slide-out" class="side-nav fixed">
+        @RenderPage("_LoginPartial.cshtml")
+    </ul>
+    <!--/. Sidebar navigation -->
+    <!--Navbar-->
+    <nav class="navbar navbar-fixed-top scrolling-navbar double-nav">
+        <!-- SideNav slide-out button -->
+        <div class="pull-left">
+            <a data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
         </div>
-    </header>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">@Empresa</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="@Url.Action("Index", "Home")">Home</a>
-            <a class="mdl-navigation__link" href="mailto:webmaster@localhost.com?Subject=Facturacion Electronica">Contact</a>
-            <a class="mdl-navigation__link" href="">About</a>
-        </nav>
+
+        <!-- Breadcrumb-->
+        <div class="breadcrumb-dn">
+            <p>@Title</p>
+        </div>
+
+        <ul class="nav navbar-nav pull-right">
+            @RenderPage("_AccountPartial.cshtml")
+        </ul>
+
+    </nav>
+    <!--/.Navbar-->
+
+</header>
+
+<main class="">
+    <div class="container">
+        @RenderBody()
     </div>
-    <main class="mdl-layout__content">
-        <div class="page-content">
-            @RenderBody()
+</main>
+
+<footer class="page-footer">
+
+    <!--Social buttons-->
+    <div class="social-section">
+        <ul>
+            <li><a class="btn-floating btn-small btn-fb waves-effect waves-light"><i class="fa fa-facebook"> </i></a></li>
+            <li><a class="btn-floating btn-small btn-tw waves-effect waves-light"><i class="fa fa-twitter"> </i></a></li>
+            <li><a class="btn-floating btn-small btn-gplus waves-effect waves-light"><i class="fa fa-google-plus"> </i></a></li>
+            <li><a class="btn-floating btn-small btn-li waves-effect waves-light"><i class="fa fa-linkedin"> </i></a></li>
+            <li><a class="btn-floating btn-small btn-ins waves-effect waves-light"><i class="fa fa-instagram"> </i></a></li>
+        </ul>
+    </div>
+    <!--/.Social buttons-->
+    <!--Copyright-->
+    <div class="footer-copyright">
+        <div class="container-fluid">
+            © @DateTime.Now.Year Copyright: <a href="http://www.tisoluciones.net">@Empresa</a>
         </div>
-        <footer class="mdl-mini-footer">
-            <div class="mdl-mini-footer__left-section">
-                <div class="mdl-logo">@Empresa</div>
-                <ul class="mdl-mini-footer__link-list">
-                    <li><a href="#">Help</a></li>
-                    <li><a href="#">Privacy & Terms</a></li>
-                </ul>
-            </div>
-        </footer>
-    </main>
-    <div class="mdl-layout__obfuscator"></div>
-</div>
-<script src="~/Content/mdl1.2.1/material.js"></script>
-<script src="~/Scripts/modernizr-2.6.2.js"></script>
-<script src="~/Scripts/jquery-1.9.1.js"></script>
-<script src="~/Scripts/jquery.validate.js"></script>
-@if (IsSectionDefined("BottomSite"))
+    </div>
+    <!--/.Copyright-->
+</footer>
+<!-- JQuery -->
+<script type="text/javascript" src="~/Scripts/mdb/jquery-2.2.3.min.js"></script>
+
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="~/Scripts/mdb/tether.min.js"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="~/Scripts/mdb/bootstrap.min.js"></script>
+
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="~/Scripts/mdb/mdbpro.min.js"></script>
+<script>
+    $(".button-collapse").sideNav();
+    var el = document.querySelector('.custom-scrollbar');
+    Ps.initialize(el);
+</script>
+@if (IsSectionDefined("Scripts"))
 {
-    @RenderSection("BottomSite")
+    @RenderSection("Scripts")
 }
 </body>
 </html>

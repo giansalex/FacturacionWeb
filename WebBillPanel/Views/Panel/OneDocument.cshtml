@@ -3,111 +3,85 @@
 @model ventaDto
 @{
     ViewBag.Title = "Comprobante";
-    var config = (configuracionfacturacionDto)ViewBag.Config;
 }
-@helper SetInfo(string label, object content)
+@section Styles
 {
-    <span class="mdl-typography--headline" style="font-weight: bold;font-size: 18px;display: block">@label</span>
-    <span style="display: block">@content</span>
-}
-@helper SetDetail(string label, object content)
-{
-    <div class="form-group">
-        <label class="col-sm-2 control-label">@label</label>
-        <div class="col-sm-10">
-            <input class="form-control" type="text" value="@content">
-        </div>
-    </div>
-}
-@section HeadSite
-{
-    <link rel="stylesheet" href="~/Content/bootstrap.css" />
-    <link rel="stylesheet" href="~/Content/bootstrap-theme.css"/>
     <style>
-        .row-pd {
-            padding: 2.8rem 2rem;
+        .doc-parent {
+            height: 27.7rem;
+        }
+
+        div .doc-width {
+            width: 25rem;
         }
     </style>
 }
-@section BottomSite
+@section Scripts
 {
-    <script src="~/Scripts/bootstrap.js"></script>
+    <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 }
-<br/>
+<div class="doc-parent flex-center">
+    <div class="doc-width">
+        <!--Card-->
+        <div class="card card-cascade narrower">
 
-@using (Html.BeginForm("LogoutDocument", "Panel", FormMethod.Post, new { id = "formLogout" }))
-{
-    @Html.AntiForgeryToken()
-}
-<div class="row row-pd">
-    <div class="col-xs-12 col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Informacion del Emisor
-                <button id="btnLogout" onclick="javascript: document.getElementById('formLogout').submit();" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-                        style="float: right; margin-top: -0.5rem">
-                    <i class="material-icons">power_settings_new</i>
-                </button>
-                <div class="mdl-tooltip" for="btnLogout">
-                    Cerrar Sesión
+            <!--Card image-->
+            <div class="view overlay hm-white-slight">
+                <img src="http://www.pixeden.com/media/k2/galleries/697/002-invoice-bill-pay-professional-template-print.jpg" class="img-fluid" alt="">
+                <a>
+                    <div class="mask"></div>
+                </a>
+            </div>
+            <!--/.Card image-->
+            <!--Card content-->
+            <div class="card-block text-xs-center">
+                <!--Category & Title-->
+                <h5>Comprobante</h5>
+                <h4 class="card-title">
+                    @switch (Model.i_IdTipoDocumento)
+                    {
+                        case 1:
+                            <strong>FACTURA ELECTRONICA</strong>
+                            break;
+                        case 3:
+                            <strong>BOLETA ELECTRONICA</strong>
+                            break;
+                        case 7:
+                            <strong>NOTA DE CREDITO ELECTRONICA</strong>
+                            break;
+                        case 8:
+                            <strong>NOTA DE DEBITO ELECTRONICA</strong>
+                            break;
+                    }
+                </h4>
+
+                <!--Description-->
+                <p class="card-text">@(Model.v_SerieDocumento + "-" + Model.v_CorrelativoDocumento)</p><br />
+
+                <!--Card footer-->
+                <div class="card-footer">
+                    @{
+                        var id = Encryptor.Encode(Model.v_IdVenta);
+                    }
+                    <span class="left">@(Model.i_IdMoneda == 1 ? "S/." : "$") @Model.d_Total.Value.ToString("N2")</span>
+                    <span class="right">
+                        <a class="active" href="@Url.Action("gen-pdf", "Panel", new {id, org = "vb12d"})" data-toggle="tooltip" data-placement="top" title="PDF"><i class="fa fa-file-pdf-o"></i></a>
+                        <a href="@Url.Action("gen-xml", "Panel", new {id, org = "vb12d"})" data-toggle="tooltip" data-placement="top" title="XML"><i class="fa fa-file-excel-o"></i></a>
+                    </span>
                 </div>
+
             </div>
-            <div class="panel-body">
-                @SetInfo("RUC", config.v_Ruc)<br/>
-                @SetInfo("Razon Social", config.v_RazonSocial)<br />
-                @SetInfo("Nombre Comercial", config.v_NombreComercial)<br />
-                @SetInfo("Direccion", config.v_Domicilio)<br />
-                @SetInfo("Resolucion SUNAT", config.v_Resolucion)
-            </div>
+            <!--/.Card content-->
+
         </div>
-    </div>
-    <div class="col-xs-12 col-md-8">
-        <div class="panel panel-default">
-            <div class="panel-heading" style="font-weight: bold">
-                @switch (Model.i_IdTipoDocumento)
-                {
-                    case 1:
-                        <span>FACTURA ELECTRONICA</span>
-                        break;
-                    case 3:
-                        <span>BOLETA ELECTRONICA</span>
-                        break;
-                    case 7:
-                        <span>NOTA DE CREDITO ELECTRONICA</span>
-                        break;
-                    case 8:
-                        <span>NOTA DE DEBITO ELECTRONICA</span>
-                        break;
-                }
-                <span style="float: right">@(Model.v_SerieDocumento + "-" + Model.v_CorrelativoDocumento)</span>
-            </div>
-            <div class="panel-body" style="padding:2rem 10%">
-                <form class="form-horizontal">
-                    @SetDetail("Fecha", Model.t_FechaRegistro?.ToShortDateString())
-                    @SetDetail("Moneda", Model.i_IdMoneda == 1 ? "SOLES" : "DOLARES")
-                    @SetDetail("SubTotal", (Model.d_Valor ?? 0).ToString("N2"))
-                    @SetDetail("Descuento", (Model.d_Descuento ?? 0).ToString("N2"))
-                    @SetDetail("IGV", (Model.d_IGV ?? 0).ToString("N2"))
-                    @SetDetail("Total", (Model.d_Total ?? 0).ToString("N2"))
-                </form>
-                <div class="text-center">
-                    <button id="btnDownloadDoc" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                        <i class="material-icons">cloud_download</i>
-                    </button>
-                    <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect"
-                        for="btnDownloadDoc">
-                        @{
-                            var id = Encryptor.Encode(Model.v_IdVenta);
-                        }
-                        <li class="mdl-menu__item" onclick="location.href ='@Url.Action("gen-pdf", "Panel", new {id, org="vb12d"})'">Descargar PDF</li>
-                        <li class="mdl-menu__item" onclick="location.href ='@Url.Action("gen-xml", "Panel", new {id, org="vb12d"})'">Descargar XML</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <!--/.Card-->
     </div>
 </div>
-<br/>
+
 
 
 

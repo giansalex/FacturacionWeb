@@ -3,78 +3,54 @@
 @model IEnumerable<ventaDto>
 @{
     ViewBag.Title = "Panel";
-    var cliente = (clienteDto)ViewBag.Cliente;
+    int count = 0;
 }
-@section HeadSite
+@section Styles
 {
-    <link rel="stylesheet" href="~/Content/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.dataTables.min.css"/>
     <style>
-        .img-FondoUser {
-            background: url('http://uniconenc.com/default/img/mobilen/img/sub_3/dc.jpg') center/cover;
+        .parent-height {
+            height: 40rem;
         }
-        .thead-inverse th {
-          color: #fff;
-          background-color: #373a3c;
+
+        div .content-width {
+            width: 25rem;
         }
     </style>
 }
-@section BottomSite
+@section Scripts
 {
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js"></script>
     <script>
-        $(document)
-            .ready(function() {
-                'use strict';
-                $('#btnLogout')
-                    .click(function() {
-                        $('#formLogout').submit();
-                    });
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        $(document).ready(function(){
+            $('#myTable').DataTable({
+                responsive: true,
+                bProcessing: false,
+                bFilter: false,
+                bAutoWidth: false,
+                bLengthChange : false
             });
+        });
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
     </script>
 }
 <br/>
-@using (Html.BeginForm("Logout", "Panel", FormMethod.Post, new {id = "formLogout"}))
-{
-    @Html.AntiForgeryToken()
-}
-<div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--2-offset-desktop mdl-cell--8-col">
-        <div class="mdl-grid mdl-grid--no-spacing mdl-shadow--6dp">
-            <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone img-FondoUser">
-                <!--<i class="material-icons mdl-list__item-avatar iconUser--center">account_circle</i>-->
-            </div>
-            <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-                <div class="mdl-card__supporting-text">
-                    <h4>@(cliente.i_IdTipoIdentificacion == 1 ? "DNI:" : "RUC:") @cliente.v_NroDocIdentificacion</h4>
-                    @(string.Join(" ", cliente.v_PrimerNombre, cliente.v_SegundoNombre, cliente.v_ApePaterno, cliente.v_ApeMaterno))
-                    <span class="mdl-typography--headline" style="font-size: 14px;">@cliente.v_RazonSocial @cliente.v_DirecPrincipal</span>
-                    <br />
-                </div>
-                <div class="mdl-card__actions mdl-card--border" style="position: absolute;
-    bottom: 0;">
-                    <a href="@cliente.v_PaginaWeb" class="mdl-button mdl-button--colored">Ir a mi sitio</a>
-                </div>
-                <div class="mdl-card__menu">
-                    <button id="btnLogout" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                        <i class="material-icons">power_settings_new</i>
-                    </button>
-                    <div class="mdl-tooltip" for="btnLogout">
-                        Cerrar Sesión
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+<h3 class="text-xs-center">Comprobantes Electrónicos <span class="tag special-color">@Model.Count()</span></h3>
 <br/>
-<h3 class="mdl-layout-title" style="padding: 10px; text-align: center"><span class="mdl-badge" data-badge="@Model.Count()">Comprobantes Electrónicos</span></h3>
-<div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--2-offset-desktop mdl-cell--8-col">
-        <table class="table table-hover">
-            <thead class="thead-inverse">
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <table  class="display responsive nowrap"  id="myTable">
+            <thead>
                 <tr>
-                    <th>Serie</th>
+                    <th>#</th>
+                    <th>Doc</th>
                     <th>Fecha</th>
                     <th>Total</th>
                     <th>PDF</th>
@@ -82,38 +58,31 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.v_SerieDocumento - @item.v_CorrelativoDocumento</td>
-                        <td>@item.t_FechaRegistro.Value.ToShortDateString()</td>
-                        <td>S/.@item.d_Total</td>
-                        <td>
-                            @{
-                                var id = Encryptor.Encode(item.v_IdVenta);
-                            }
-                            <button id="btnDownPdf_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
-                                    onclick="location.href = '@Url.Action("gen-pdf", "Panel", new {id, pred = "uxsr"})'">
-                                <i class="material-icons">cloud_download</i>
-                            </button>
-                            <div class="mdl-tooltip" for="btnDownPdf_@item.v_CorrelativoDocumento">
-                                Descargar PDF
-                            </div>
-                        </td>
-                        <td>
-                            <button id="btnDownXml_@item.v_CorrelativoDocumento" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
-                                    onclick="location.href ='@Url.Action("gen-xml", "Panel", new {id, pred = "uxsr"})'">
-                                <i class="material-icons">file_download</i>
-                            </button>
-                            <div class="mdl-tooltip" for="btnDownXml_@item.v_CorrelativoDocumento">
-                                Descargar XML
-                            </div>
-                        </td>
-                    </tr>
-                 }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@(++count)</th>
+                    <td>@item.v_SerieDocumento - @item.v_CorrelativoDocumento</td>
+                    <td>@item.t_FechaRegistro.Value.ToShortDateString()</td>
+                    <td>@(item.i_IdMoneda == 1 ? "S/." : "$") @item.d_Total</td>
+                    <td>
+                        @{
+                            var id = Encryptor.Encode(item.v_IdVenta);
+                        }
+                        <button type="button" class="btn btn-sm btn-primary red" data-toggle="tooltip" data-placement="top" title="Descargar PDF"
+                                onclick="location.href = '@Url.Action("gen-pdf", "Panel", new {id, pred = "uxsr"})'">
+                            <i class="fa fa-file-pdf-o"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-primary green" data-toggle="tooltip" data-placement="top" title="Descargar XML"
+                                onclick="location.href ='@Url.Action("gen-xml", "Panel", new {id, pred = "uxsr"})'">
+                            <i class="fa fa-file-excel-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>
 </div>
-
-<br/>

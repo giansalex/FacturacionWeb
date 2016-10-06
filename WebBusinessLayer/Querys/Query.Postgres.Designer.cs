@@ -70,7 +70,7 @@ namespace WebBusinessLayer.Querys {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a SELECT &quot;v_IdCliente&quot; FROM cliente WHERE &quot;v_NroDocIdentificacion&quot; = @id.
+        ///   Busca una cadena traducida similar a SELECT &quot;v_IdCliente&quot; FROM cliente WHERE &quot;v_NroDocIdentificacion&quot; = @id AND &quot;v_Password&quot;=@pass.
         /// </summary>
         internal static string GetIdClient {
             get {

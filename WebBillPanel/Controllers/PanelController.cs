@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Security.Cryptography;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using WebBusinessLayer;
 using WebBusinessLayer.Security;
 using WebDocs;
@@ -17,8 +15,8 @@ namespace WebBillPanel.Controllers
             if (Session["_idUser__"] == null) return RedirectToAction("", "Home");
             var idUser = Session["_idUser__"].ToString();
             var vbl = new VentaBl();
-            var cbl = new ClienteBl();
-            ViewBag.Cliente = cbl.GetClient(idUser);
+            //var cbl = new ClienteBl();
+            //ViewBag.Cliente = cbl.GetClient(idUser);
             var items = vbl.GetListFromClient(idUser);
             return View(items);
         }
@@ -30,7 +28,6 @@ namespace WebBillPanel.Controllers
             var vbl = new VentaBl();
             var v = vbl.GetVenta(idVenta.ToString());
             if (!vbl.LastResult.Success) return HttpNotFound("Error de Conexion");
-            ViewBag.Config = new ConfiguracionFacturacionBl().GetLite();
             return View(v);
         }
 
