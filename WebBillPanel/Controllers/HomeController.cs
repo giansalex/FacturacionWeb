@@ -10,6 +10,12 @@ namespace WebBillPanel.Controllers
 {
     public class HomeController : Controller
     {
+        #region Fields
+        public const string IdUser = "_idUser__";
+        public const string IdDoc = "_idVenta__";
+        public const string IdAdmin = "_idAdmin__";
+        #endregion
+
         #region Methods Controller
         // GET: Home
         public ActionResult Index()
@@ -34,7 +40,7 @@ namespace WebBillPanel.Controllers
                 if(admin.UserName == "10480048356" && admin.Password == "123456")
                 //if (id != null)
                 {
-                    Session["_idAdmin__"] = id;
+                    Session[IdAdmin] = id;
                     return RedirectToAction("SaveConfig", "Panel");
                 }
                 ViewBag.NoValid = true;
@@ -45,7 +51,7 @@ namespace WebBillPanel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogoutAdmin()
         {
-            Session["_idAdmin__"] = null;
+            Session[IdAdmin] = null;
             return RedirectToAction("Admin", "Home");
         }
 
@@ -66,7 +72,7 @@ namespace WebBillPanel.Controllers
                 var id = cbl.GetIdClient(usuario.UserName, pass);
                 if (id != null)
                 {
-                    Session["_idUser__"] = id;
+                    Session[IdUser] = id;
                     return RedirectToAction("Index", "Panel");
                 }
                 ViewBag.NoValid = true;
@@ -77,7 +83,6 @@ namespace WebBillPanel.Controllers
         //GET: Login Documento
         public ActionResult LoginDoc()
         {
-            ViewBag.DocItems = GetDocs();
             return View();
         }
 
@@ -88,51 +93,19 @@ namespace WebBillPanel.Controllers
             if (ModelState.IsValid)
             {
                 var idVenta = new VentaBl()
-                    .GetIdVenta(factura.TipoDocumento, factura.Serie, factura.Correlativo, factura.FechaEmision, factura.Total);
+                    .GetIdVenta((int)factura.TipoDocumento, factura.Serie, factura.Correlativo, factura.FechaEmision, factura.Total);
                 if (idVenta != null)
                 {
-                    Session["_idVenta__"] = idVenta;
+                    Session[IdDoc] = idVenta;
                     return RedirectToAction("OneDocument", "Panel");
                 }
                 ViewBag.NoValid = true;
             }
-            ViewBag.DocItems = GetDocs();
             return View();
         }
         #endregion
 
         #region Private Methods
-        /// <summary>
-        /// Obtiene documentos electronicos disponibles.
-        /// </summary>
-        /// <returns></returns>
-        private List<SelectListItem> GetDocs()
-        {
-            return new List<SelectListItem>
-            {
-                new SelectListItem(),
-                new SelectListItem
-                {
-                    Text = @"FACTURA",
-                    Value = "1"
-                },
-                new SelectListItem
-                {
-                    Text = @"BOLETA",
-                    Value = "3"
-                },
-                new SelectListItem
-                {
-                    Text = @"NOTA DE CREDITO",
-                    Value = "7"
-                },
-                new SelectListItem
-                {
-                    Text = @"NOTA DE DEBITO",
-                    Value = "8"
-                }
-            };
-        }
 
         /// <summary>
         /// Encrypts the specified p data.

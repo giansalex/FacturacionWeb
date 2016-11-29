@@ -40,9 +40,12 @@
                         </h3>
                         <hr class="m-t-2 m-b-2">
                     </div>
+                    @*<blockquote class="blockquote bq-danger">
+                        @Html.ValidationSummary(false, "", new { @class="text-danger"})
+                    </blockquote>*@
                     <!--Body-->
                     <div class="md-form">
-                        @Html.DropDownListFor(m => m.TipoDocumento, (IEnumerable<SelectListItem>)ViewBag.DocItems, new { id = "mdb-select" })
+                        @Html.EnumDropDownListFor(m => m.TipoDocumento, new { id = "mdb-select" })
                         @Html.LabelFor(m => m.TipoDocumento)
                     </div>
                     @*@Html.ValidationMessageFor(m => m.TipoDocumento, "", new { @class = "text-danger" })*@

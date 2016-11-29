@@ -9,19 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@ViewBag.Title - @Title</title>
+    <link rel="SHORTCUT ICON" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
-
     <!-- Bootstrap core CSS -->
     <link href="~/Content/mdb/bootstrap.min.css" rel="stylesheet">
 
     <!-- Material Design Bootstrap -->
     <link href="~/Content/mdb/mdbpro.min.css" rel="stylesheet">
-
-    @if (IsSectionDefined("Styles"))
-    {
-        @RenderSection("Styles")
-    }
-
+    @RenderSection("Styles", false)
 </head>
 <body class="fixed-sn graphite-skin">
 <header>
@@ -95,9 +90,6 @@
     var el = document.querySelector('.custom-scrollbar');
     Ps.initialize(el);
 </script>
-@if (IsSectionDefined("Scripts"))
-{
-    @RenderSection("Scripts")
-}
+@RenderSection("Scripts", false)
 </body>
 </html>

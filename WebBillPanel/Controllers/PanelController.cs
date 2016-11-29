@@ -3,7 +3,10 @@ using System.IO;
 using System.Web.Mvc;
 using WebBusinessLayer;
 using WebBusinessLayer.Security;
+using System.Collections.Generic;
 using WebDocs;
+using WebDataModel.Entities;
+using WebBillPanel.Models;
 
 namespace WebBillPanel.Controllers
 {
@@ -12,18 +15,29 @@ namespace WebBillPanel.Controllers
         // GET: Panel
         public ActionResult Index()
         {
-            if (Session["_idUser__"] == null) return RedirectToAction("", "Home");
-            var idUser = Session["_idUser__"].ToString();
-            var vbl = new VentaBl();
+            if (Session[HomeController.IdUser] == null) return RedirectToAction("", "Home");
+            var idUser = Session[HomeController.IdUser].ToString();
+            //var vbl = new VentaBl();
             //var cbl = new ClienteBl();
             //ViewBag.Cliente = cbl.GetClient(idUser);
-            var items = vbl.GetListFromClient(idUser);
+            //var items = vbl.GetListFromClient(idUser);
+            var items = new List<ventaDto>
+            {
+                new ventaDto
+                {
+                    v_IdVenta = "N001-21312",
+                    v_SerieDocumento = "F001",
+                    v_CorrelativoDocumento ="000000012",
+                    d_Total = 12.32M,
+                    t_FechaRegistro = new DateTime(2016, 2,1)
+                }
+            };
             return View(items);
         }
 
         public ActionResult OneDocument()
         {
-            var idVenta = Session["_idVenta__"];
+            var idVenta = Session[HomeController.IdDoc];
             if (idVenta == null) return RedirectToAction("Index", "Home");
             var vbl = new VentaBl();
             var v = vbl.GetVenta(idVenta.ToString());
@@ -35,7 +49,7 @@ namespace WebBillPanel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Logout()
         {
-            Session["_idUser__"] = null;
+            Session[HomeController.IdUser] = null;
             return RedirectToAction("LoginUser", "Home");
         }
 
@@ -43,25 +57,14 @@ namespace WebBillPanel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogoutDocument()
         {
-            Session["_idVenta__"] = null;
+            Session[HomeController.IdDoc] = null;
             return RedirectToAction("LoginDoc", "Home");
         }
 
         [ActionName("gen-xml")]
-        public FileResult GenerateXml(string id, string org)
+        public ActionResult GenerateXml(string id)
         {
-            switch (org)
-            {
-                case "uxsr":
-                    if (Session["_idUser__"] == null) return null;
-                    break;
-                case "vb12d":
-                    if (Session["_idVenta__"] == null) return null;
-                    break;
-                default:
-                    return null;
-            }
-
+            if (IsNotValidSession()) return HttpNotFound();
             try
             {
                 var idVenta = Encryptor.Decode(id);
@@ -77,23 +80,13 @@ namespace WebBillPanel.Controllers
             {
                 ExceptionUtility.LogException(er, "GenerateXMl");
             }
-            return null;
+            return HttpNotFound();
         }
 
         [ActionName("gen-pdf")]
-        public FileResult GeneratePdf(string id, string org)
+        public ActionResult GeneratePdf(string id)
         {
-            switch (org)
-            {
-                case "uxsr":
-                    if (Session["_idUser__"] == null) return null;
-                    break;
-                case "vb12d":
-                    if (Session["_idVenta__"] == null) return null;
-                    break;
-                default:
-                    return null;
-            }
+            if (IsNotValidSession()) return HttpNotFound();
             try
             {
                 var idVenta = Encryptor.Decode(id);
@@ -105,13 +98,12 @@ namespace WebBillPanel.Controllers
             {
                 ExceptionUtility.LogException(er, "GeneratePDF");
             }
-            return null;
+            return HttpNotFound();
         }
 
         public ActionResult SaveConfig()
         {
-            var idVenta = Session["_idAdmin__"];
-            if (idVenta == null) return RedirectToAction("Admin", "Home");
+            if (Session[HomeController.IdAdmin] == null) return RedirectToAction("Admin", "Home");
             ViewBag.IsSql = ManagerConfiguration.Bd == DataBases.SqlServer;
             ViewBag.Cadena = ManagerConfiguration.ConectionString;
             return View();
@@ -121,8 +113,7 @@ namespace WebBillPanel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveConfig(string tipo, string server, string user, string password, string database)
         {
-            var idVenta = Session["_idAdmin__"];
-            if (idVenta == null) return RedirectToAction("Admin", "Home");
+            if (Session[HomeController.IdAdmin] == null) return RedirectToAction("Admin", "Home");
             DataBases db;
             if (Enum.TryParse(tipo, out db))
             {
@@ -135,8 +126,38 @@ namespace WebBillPanel.Controllers
                 ViewBag.IsValid = false;
                 ViewBag.Mensaje = "El tipo de Base de Datos no es aceptado";
             }
+
             ViewBag.IsSql = db == DataBases.SqlServer;
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Search([Bind(Include = "TipoDocumento,Serie,Correlativo,FechaInicial,FechaFinal")] FilterDoc filter)
+        {
+            var items = new List<ventaDto>
+            {
+                new ventaDto
+                {
+                    v_IdVenta = "N001-21312",
+                    v_SerieDocumento = "F001",
+                    v_CorrelativoDocumento ="000000012",
+                    d_Total = 12.32M,
+                    t_FechaRegistro = new DateTime(2016, 2,1)
+                },
+                new ventaDto
+                {
+                    v_IdVenta = "N001-6432",
+                    v_SerieDocumento = "F002",
+                    v_CorrelativoDocumento ="954646",
+                    d_Total = 12.32M,
+                    t_FechaRegistro = new DateTime(2016, 2,1)
+                }
+            };
+            return View(items);
+        }
+        private bool IsNotValidSession()
+        {
+            return Session[HomeController.IdDoc] == null && Session[HomeController.IdUser] == null;
         }
     }
 

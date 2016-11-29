@@ -27,6 +27,46 @@
         $(function() {
             $('[data-toggle="tooltip"]').tooltip();
         });
+        var validateFecha = function () {
+            var init = $("input[name=finit1]").val();
+            var end = $("input[name=fend1]").val();
+            if (init == '' || end == '') {
+                alert('Elegir rango de Fechas');
+                return false;
+            }
+            return true;
+        };
+        var busqueda = function () {
+            if (!validateFecha()) return false;
+            var filtro = {
+                TipoDocumento: $('#mdb-select').val(),
+                Serie: $('#serie').val(),
+                Correlavito: $('#correlativo').val(),
+                FechaInicial: $("input[name=finit1]").val(),
+                FechaFinal: $("input[name=fend1]").val()
+            };
+            var url = "@Url.Action("Search", "Panel")";
+            console.log(filtro);
+            $.ajax(url, {
+                data: filtro,
+                method: "POST",
+                error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError);
+                }
+            }).done(function (data) {
+                //console.log(data);
+                $('#result').replaceWith(data);
+                $('#myTable').DataTable({
+                    responsive: true,
+                    bProcessing: false,
+                    bFilter: false,
+                    bAutoWidth: false,
+                    bLengthChange: false
+                });
+            });
+            return false;
+        };
+
         $(document).ready(function(){
             $('#myTable').DataTable({
                 responsive: true,
@@ -35,51 +75,64 @@
                 bAutoWidth: false,
                 bLengthChange : false
             });
+            $('#finit').pickadate({
+                formatSubmit: 'dd/mm/yyyy',
+                hiddenSuffix: '1'
+            });
+            $('#fend').pickadate({
+                formatSubmit: 'dd/mm/yyyy',
+                hiddenSuffix: '1'
+            });
+            $('#mdb-select').material_select();
+            $('#formSearch').submit(busqueda);
         });
     </script>
 }
 <br/>
-<h3 class="text-xs-center">Comprobantes Electrónicos <span class="tag special-color">@Model.Count()</span></h3>
+<p>
+    <a class="btn-floating btn-large green" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters"><i class="fa fa-filter"></i></a>
+</p>
+<div class="collapse" id="filters">
+    <br />
+    <form class="form-inline" id="formSearch">
+        <div class="md-form form-group">
+            <label for="finit">Fecha de Inicio</label>
+            <input placeholder="Selecciona Fecha" type="text" id="finit" class="form-control" name="finit">
+        </div>
+        <div class="md-form form-group">
+            <label for="fend">Fecha de Fin</label>
+            <input placeholder="Selecciona Fecha" type="text" id="fend" class="form-control" name="fend">
+        </div>
+        <div class="md-form form-group">
+            <select id="mdb-select">
+                <option value="-1" selected>Seleccione</option>
+                <option value="1">FACTURA</option>
+                <option value="3">BOLETA</option>
+                <option value="7">NOTA DE CREDITO</option>
+                <option value="8">NOTA DE DEBITO</option>
+            </select>
+            <label for="mdb-select">Tipo Documento</label>
+        </div>
+        <div class="md-form form-group">
+            <label for="serie">Serie</label>
+            <input type="text" id="serie" class="form-control" name="serie">
+        </div>
+        <div class="md-form form-group">
+            <label for="correlativo">Correlativo</label>
+            <input type="text" id="correlativo" class="form-control" name="correlativo">
+        </div>
+        <br />
+        <div>
+            <button class="btn btn-primary" id="btnSearch">Buscar</button>
+        </div>
+    </form>
+</div>
+<br />
+<h3 class="text-xs-center">Comprobantes Electrónicos @*<span class="tag special-color">@Model.Count()</span>*@</h3>
 <br/>
+
 <div class="row" style="min-height:25rem">
-    <div class="col-md-8 offset-md-2">
-        <table  class="display responsive nowrap"  id="myTable">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Doc</th>
-                    <th>Fecha</th>
-                    <th>Total</th>
-                    <th>PDF</th>
-                    <th>XML</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <th scope="row">@(++count)</th>
-                    <td>@item.v_SerieDocumento - @item.v_CorrelativoDocumento</td>
-                    <td>@item.t_FechaRegistro.Value.ToShortDateString()</td>
-                    <td>@(item.i_IdMoneda == 1 ? "S/." : "$") @item.d_Total</td>
-                    <td>
-                        @{
-                            var id = Encryptor.Encode(item.v_IdVenta);
-                        }
-                        <button type="button" class="btn btn-sm btn-primary red" data-toggle="tooltip" data-placement="top" title="Descargar PDF"
-                                onclick="location.href = '@Url.Action("gen-pdf", "Panel", new {id, org = "uxsr"})'">
-                            <i class="fa fa-file-pdf-o"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-primary green" data-toggle="tooltip" data-placement="top" title="Descargar XML"
-                                onclick="location.href ='@Url.Action("gen-xml", "Panel", new {id, org = "uxsr"})'">
-                            <i class="fa fa-file-excel-o"></i>
-                        </button>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
+    <div class="col-md-8 offset-md-2" id="result">
+        @Html.Partial("Search", Model)
     </div>
 </div>

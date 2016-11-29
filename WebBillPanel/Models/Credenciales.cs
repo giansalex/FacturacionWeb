@@ -24,7 +24,7 @@ namespace WebBillPanel.Models
     {
         [Required]
         [Display(Name = @"Documento")]
-        public int TipoDocumento { get; set; }
+        public TypeDocument TipoDocumento { get; set; }
         [Required]
         [RegularExpression("^[FB]\\w{3}$", ErrorMessage = @"Serie Inválida.")]
         public string Serie { get; set; }
@@ -38,5 +38,14 @@ namespace WebBillPanel.Models
         [Required]
         [DataType(DataType.Currency)]
         public decimal Total { get; set; }
+    }
+
+    public enum TypeDocument{
+        FACTURA = 1,
+        BOLETA = 3,
+        [Display(Name = "NOTA DE CREDITO")]
+        NOTACREDITO = 7,
+        [Display(Name ="NOTA DE DEBITO")]
+        NOTADEBITO = 8
     }
 }

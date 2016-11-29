@@ -69,8 +69,8 @@
                     }
                     <span class="left">@(Model.i_IdMoneda == 1 ? "S/." : "$") @Model.d_Total.Value.ToString("N2")</span>
                     <span class="right">
-                        <a class="active" href="@Url.Action("gen-pdf", "Panel", new {id, org = "vb12d"})" data-toggle="tooltip" data-placement="top" title="PDF"><i class="fa fa-file-pdf-o"></i></a>
-                        <a href="@Url.Action("gen-xml", "Panel", new {id, org = "vb12d"})" data-toggle="tooltip" data-placement="top" title="XML"><i class="fa fa-file-excel-o"></i></a>
+                        <a class="active" href="@Url.Action("gen-pdf", "Panel", new {id})" data-toggle="tooltip" data-placement="top" title="PDF"><i class="fa fa-file-pdf-o"></i></a>
+                        <a href="@Url.Action("gen-xml", "Panel", new {id})" data-toggle="tooltip" data-placement="top" title="XML"><i class="fa fa-file-excel-o"></i></a>
                     </span>
                 </div>
 

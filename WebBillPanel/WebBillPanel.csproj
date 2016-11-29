@@ -111,6 +111,7 @@
     <Content Include="Content\mdl1.2.1\mdl-selectfield.min.css" />
     <Content Include="Content\mdl1.2.1\mdl-selectfield.min.js" />
     <Content Include="Content\Site.css" />
+    <Content Include="favicon.ico" />
     <Content Include="font\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\mdl1.2.1\mdl-selectfield.min.css.map" />
@@ -172,6 +173,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Credenciales.cs" />
+    <Compile Include="Models\FilterDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +191,7 @@
     <Content Include="Views\Panel\SaveConfig.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_AccountPartial.cshtml" />
+    <Content Include="Views\Panel\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

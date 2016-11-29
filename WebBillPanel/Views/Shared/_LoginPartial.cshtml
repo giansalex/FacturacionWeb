@@ -46,23 +46,12 @@
 </li>
 <!--/. Logo -->
 <!-- Side navigation links -->
-<ul class="collapsible collapsible-accordion">
-
+<ul class="collapsible collapsible-accordion"> 
     @if (Session["_idUser__"] == null && Session["_idVenta__"] == null && Session["_idAdmin__"] == null)
     {
-    <li>
-        <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-home"></i> Contactar<i class="fa fa-angle-down rotate-icon"></i></a>
-        <div class="collapsible-body">
-            <ul>
-                <li>
-                    <a href="#" class="waves-effect">Administrador</a>
-                </li>
-                <li>
-                    <a href="#" class="waves-effect">Proveedor</a>
-                </li>
-            </ul>
-        </div>
-    </li>
+        <li>
+            <a class="collapsible-header waves-effect arrow-r" href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i> Home<i class="fa fa-angle-down rotate-icon"></i></a>
+        </li>
     }
     else
     {
