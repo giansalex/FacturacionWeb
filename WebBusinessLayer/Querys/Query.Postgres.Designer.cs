@@ -70,7 +70,7 @@ namespace WebBusinessLayer.Querys {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a SELECT &quot;v_IdCliente&quot; FROM cliente WHERE &quot;v_NroDocIdentificacion&quot; = @id AND &quot;v_Password&quot;=@pass.
+        ///   Busca una cadena traducida similar a SELECT &quot;v_IdCliente&quot; FROM cliente WHERE &quot;v_NroDocIdentificacion&quot; = @id AND &quot;v_Password&quot;=@pass AND &quot;i_Eliminado&quot;=0.
         /// </summary>
         internal static string GetIdClient {
             get {
@@ -79,7 +79,7 @@ namespace WebBusinessLayer.Querys {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a SELECT &quot;v_IdVenta&quot; FROM venta WHERE &quot;i_IdTipoDocumento&quot;=@tipoDoc AND &quot;v_SerieDocumento&quot;=@serie AND &quot;v_CorrelativoDocumento&quot;=@correlativo AND &quot;t_FechaRegistro&quot;=@fecha AND &quot;d_Total&quot;=@total.
+        ///   Busca una cadena traducida similar a SELECT &quot;v_IdVenta&quot; FROM venta WHERE &quot;i_IdTipoDocumento&quot;=@tipoDoc AND &quot;v_SerieDocumento&quot;=@serie AND &quot;v_CorrelativoDocumento&quot;=@correlativo AND &quot;t_FechaRegistro&quot;=@fecha AND &quot;d_Total&quot;=@total AND &quot;i_Eliminado&quot;=0.
         /// </summary>
         internal static string GetIdVenta {
             get {
@@ -99,7 +99,7 @@ namespace WebBusinessLayer.Querys {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a SELECT * FROM venta WHERE &quot;v_IdCliente&quot;=@id AND (&quot;v_SerieDocumento&quot; LIKE &apos;F%&apos; OR &quot;v_SerieDocumento&quot; LIKE &apos;B%&apos;).
+        ///   Busca una cadena traducida similar a SELECT &quot;v_IdVenta&quot;, &quot;v_SerieDocumento&quot;, &quot;v_CorrelativoDocumento&quot;, &quot;t_FechaRegistro&quot;, &quot;d_Total&quot;  FROM venta WHERE &quot;v_IdCliente&quot;=@id AND (&quot;v_SerieDocumento&quot; LIKE &apos;F%&apos; OR &quot;v_SerieDocumento&quot; LIKE &apos;B%&apos;) AND &quot;i_Eliminado&quot;=0.
         /// </summary>
         internal static string GetListFromClient {
             get {
@@ -132,7 +132,7 @@ namespace WebBusinessLayer.Querys {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a SELECT * FROM venta WHERE &quot;v_IdVenta&quot;=@idVenta.
+        ///   Busca una cadena traducida similar a SELECT * FROM venta WHERE &quot;v_IdVenta&quot;=@idVenta AND &quot;i_Eliminado&quot;=0.
         /// </summary>
         internal static string GetVenta {
             get {
@@ -158,7 +158,7 @@ namespace WebBusinessLayer.Querys {
         ///LEFT OUTER JOIN datahierarchy d on v.&quot;i_IdUnidadMedida&quot;= d.&quot;i_ItemId&quot; AND d.&quot;i_GroupId&quot;= 17
         ///LEFT OUTER JOIN datahierarchy d2 on d.&quot;i_ParentItemId&quot; = d2.&quot;i_ItemId&quot; AND d2.&quot;i_GroupId&quot; = @idg
         ///LEFT OUTER JOIN datahierarchy d3 ON v.&quot;i_IdTipoOperacion&quot; = d3.&quot;i_ItemId&quot; AND d3.&quot;i_GroupId&quot; = 35
-        ///WHERE v.&quot;v_IdVenta&quot; = @id.
+        ///WHERE v.&quot;v_IdVenta&quot; = @id AND v.&quot;i_Eliminado&quot;=0.
         /// </summary>
         internal static string GetVentaDetalles {
             get {

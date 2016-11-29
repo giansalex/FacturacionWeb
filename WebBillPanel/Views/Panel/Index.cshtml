@@ -36,15 +36,12 @@
                 bLengthChange : false
             });
         });
-        $(document).ready(function () {
-            $('#example').DataTable();
-        });
     </script>
 }
 <br/>
 <h3 class="text-xs-center">Comprobantes Electrónicos <span class="tag special-color">@Model.Count()</span></h3>
 <br/>
-<div class="row">
+<div class="row" style="min-height:25rem">
     <div class="col-md-8 offset-md-2">
         <table  class="display responsive nowrap"  id="myTable">
             <thead>
@@ -70,13 +67,13 @@
                             var id = Encryptor.Encode(item.v_IdVenta);
                         }
                         <button type="button" class="btn btn-sm btn-primary red" data-toggle="tooltip" data-placement="top" title="Descargar PDF"
-                                onclick="location.href = '@Url.Action("gen-pdf", "Panel", new {id, pred = "uxsr"})'">
+                                onclick="location.href = '@Url.Action("gen-pdf", "Panel", new {id, org = "uxsr"})'">
                             <i class="fa fa-file-pdf-o"></i>
                         </button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-sm btn-primary green" data-toggle="tooltip" data-placement="top" title="Descargar XML"
-                                onclick="location.href ='@Url.Action("gen-xml", "Panel", new {id, pred = "uxsr"})'">
+                                onclick="location.href ='@Url.Action("gen-xml", "Panel", new {id, org = "uxsr"})'">
                             <i class="fa fa-file-excel-o"></i>
                         </button>
                     </td>

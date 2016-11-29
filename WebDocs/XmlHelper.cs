@@ -10,7 +10,7 @@ using FacturacionElectronica.GeneradorXml.Entity;
 using FacturacionElectronica.GeneradorXml.Entity.Details;
 using FacturacionElectronica.GeneradorXml.Entity.Misc;
 using FacturacionElectronica.GeneradorXml.Enums;
-using UblLarsen.UblPE.Sac;
+using Gs.Ubl.v2.Sac;
 using WebBusinessLayer;
 using WebDataModel.Entities;
 using WebDocs.Utils;

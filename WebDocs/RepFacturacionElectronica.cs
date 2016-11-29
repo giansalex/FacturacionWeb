@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using CrystalDecisions.Shared;
 using WebBusinessLayer;
 using WebBusinessLayer.Report;
@@ -19,7 +21,7 @@ namespace WebDocs
         /// <para>El que podra ser enviado via Correo Electronico</para>
         /// </summary>
         /// <param name="idVenta">Id de la Venta</param>
-        public string GenerarPdf(string idVenta)
+        public Tuple<string, byte[]> GenerarPdf(string idVenta)
         {
             var objBl = new HelperScripts();
             var aptitudeCertificate = objBl.GetReporteInvoice(idVenta);
@@ -33,7 +35,7 @@ namespace WebDocs
             var config = bl.Get();
             if (!bl.LastResult.Success)
             {
-                return string.Empty;
+                return null;
             }
             ds1.Tables.Add(GetDataEmpresa("EmpresaInfo",
                 new KeyValuePair<string, object>("Logo", config.b_Logo),
@@ -50,13 +52,17 @@ namespace WebDocs
             rp.SetParameterValue("RucEmpresa", "RUC: " + config.v_Ruc);
             try
             {
-                var path = Path.Combine(Path.GetTempPath(), objVenta.Documento + ".pdf");
-                rp.ExportToDisk(ExportFormatType.PortableDocFormat, path);
-                return path;
+                using (var st = rp.ExportToStream(ExportFormatType.PortableDocFormat))
+                {
+                    var arr = new byte[st.Length];
+                    st.Read(arr, 0, arr.Length);
+                    return new Tuple<string, byte[]>(objVenta.Documento + ".pdf", arr);
+                }
+                //rp.ExportToDisk(ExportFormatType.PortableDocFormat, path);
             }
             catch
             {
-                return string.Empty;
+                return null;
             }
 
         }

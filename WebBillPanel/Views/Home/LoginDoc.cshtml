@@ -27,48 +27,51 @@
     </script>
 }
 <div class="login-parent flex-center @(ViewBag.NoValid != null ? "animated shake" : "")">
-    @using (Html.BeginForm("LoginDoc", "Home", FormMethod.Post, new { role = "form" , autocomplete = "off" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="card login-width">
-            <div class="card-block">
-                <!--Header-->
-                <div class="text-xs-center">
-                    <h3>
-                        <i class="fa fa-lock"></i> Login
-                    </h3>
-                    <hr class="m-t-2 m-b-2">
-                </div>
-                <!--Body-->
-                <div class="md-form">
-                    @Html.DropDownListFor(m => m.TipoDocumento, (IEnumerable<SelectListItem>) ViewBag.DocItems, new {id ="mdb-select"})
-                    @Html.LabelFor(m => m.TipoDocumento)
-                </div>
-                @*@Html.ValidationMessageFor(m => m.TipoDocumento, "", new { @class = "text-danger" })*@
-                <div class="md-form">
-                    @Html.TextBoxFor(m => m.Serie, new { @class = "form-control", pattern = @"[FB]\w{3}" })
-                    @Html.LabelFor(m => m.Serie)
-                </div>
-                @*@Html.ValidationMessageFor(m => m.Serie, "", new { @class = "text-danger" })*@
-                <div class="md-form">
-                    @Html.TextBoxFor(m => m.Correlativo, new {@class = "form-control", pattern = @"^\d{1,8}$"})
-                    @Html.LabelFor(m => m.Correlativo)
-                </div>
-                @*@Html.ValidationMessageFor(m => m.Correlativo, "", new { @class = "text-danger" })*@
-                <div class="md-form">
-                    <input placeholder="Selecciona Fecha" type="text" id="date-picker-em" class="form-control datepicker" name="Fecha">
-                    <label for="date-picker-em">Fecha de Emision</label>
-                </div>
-                @*@Html.ValidationMessageFor(m => m.FechaEmision, "", new { @class = "text-danger" })*@
-                <div class="md-form">
-                    @Html.TextBoxFor(m => m.Total, new {@class = "form-control", pattern = @"\d+\.?\d*"})
-                    @Html.LabelFor(m => m.Total)
-                </div>
-                @*@Html.ValidationMessageFor(m => m.Total, "", new { @class = "text-danger" })*@
-                <div class="text-xs-center">
-                    <button class="btn btn-unique" onclick="$(this).addClass('animated rubberBand')">Ingresar</button>
+    <div class="login-width">
+        @using (Html.BeginForm("LoginDoc", "Home", FormMethod.Post, new { role = "form", autocomplete = "off" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card">
+                <div class="card-block">
+                    <!--Header-->
+                    <div class="text-xs-center">
+                        <h3>
+                            <i class="fa fa-lock"></i> Login
+                        </h3>
+                        <hr class="m-t-2 m-b-2">
+                    </div>
+                    <!--Body-->
+                    <div class="md-form">
+                        @Html.DropDownListFor(m => m.TipoDocumento, (IEnumerable<SelectListItem>)ViewBag.DocItems, new { id = "mdb-select" })
+                        @Html.LabelFor(m => m.TipoDocumento)
+                    </div>
+                    @*@Html.ValidationMessageFor(m => m.TipoDocumento, "", new { @class = "text-danger" })*@
+                    <div class="md-form">
+                        @Html.TextBoxFor(m => m.Serie, new { @class = "form-control", pattern = @"[FB]\w{3}" })
+                        @Html.LabelFor(m => m.Serie)
+                    </div>
+                    @*@Html.ValidationMessageFor(m => m.Serie, "", new { @class = "text-danger" })*@
+                    <div class="md-form">
+                        @Html.TextBoxFor(m => m.Correlativo, new { @class = "form-control", pattern = @"^\d{1,8}$" })
+                        @Html.LabelFor(m => m.Correlativo)
+                    </div>
+                    @*@Html.ValidationMessageFor(m => m.Correlativo, "", new { @class = "text-danger" })*@
+                    <div class="md-form">
+                        <input placeholder="Selecciona Fecha" type="text" id="date-picker-em" class="form-control datepicker" name="Fecha">
+                        <label for="date-picker-em">Fecha de Emision</label>
+                    </div>
+                    @*@Html.ValidationMessageFor(m => m.FechaEmision, "", new { @class = "text-danger" })*@
+                    <div class="md-form">
+                        @Html.TextBoxFor(m => m.Total, new { @class = "form-control", pattern = @"\d+\.?\d*" })
+                        @Html.LabelFor(m => m.Total)
+                    </div>
+                    @*@Html.ValidationMessageFor(m => m.Total, "", new { @class = "text-danger" })*@
+                    <div class="text-xs-center">
+                        <button class="btn btn-unique" onclick="$(this).addClass('animated rubberBand')">Ingresar</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }        
+    </div>
+
 </div>

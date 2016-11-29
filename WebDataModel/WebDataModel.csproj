@@ -55,7 +55,6 @@
     <Compile Include="Entities\productoiscDto.cs" />
     <Compile Include="Entities\ventadetalleDto.cs" />
     <Compile Include="Entities\ventaDto.cs" />
-    <Compile Include="Entities\ventahomolagacionDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

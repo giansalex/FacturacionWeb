@@ -36,6 +36,9 @@
     <Reference Include="FacturacionElectronica.GeneradorXml">
       <HintPath>E:\FacturacionElectronica\FacturacionElectronica\FacturacionElectronica.GeneradorXml\bin\Release\FacturacionElectronica.GeneradorXml.dll</HintPath>
     </Reference>
+    <Reference Include="Gs.Ubl">
+      <HintPath>E:\FacturacionElectronica\FacturacionElectronica\FacturacionElectronica.GeneradorXml\bin\Release\Gs.Ubl.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -45,9 +48,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="UblLarsen.Ubl2">
-      <HintPath>E:\FacturacionElectronica\FacturacionElectronica\FacturacionElectronica.GeneradorXml\bin\Release\UblLarsen.Ubl2.dll</HintPath>
-    </Reference>
     <Reference Include="Zen.Barcode.Core">
       <HintPath>..\packages\Zen.Barcode.Rendering.Framework.3.1.10729.1\lib\Zen.Barcode.Core.dll</HintPath>
     </Reference>

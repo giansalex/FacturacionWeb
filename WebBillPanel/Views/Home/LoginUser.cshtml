@@ -15,35 +15,37 @@
     </style>
 }
 <div class="login-parent flex-center @(ViewBag.NoValid != null ? "animated shake" : "")">
-    @using (Html.BeginForm("LoginUser", "Home", FormMethod.Post, new {role = "form"}))
-    {
-        @Html.AntiForgeryToken()
-        <div class="card login-width" id="carg">
-            <div class="card-block">
-                <!--Header-->
-                <div class="text-xs-center">
-                    <h3>
-                        <i class="fa fa-lock"></i> Login
-                    </h3>
-                    <hr class="m-t-2 m-b-2">
-                </div>
-                <!--Body-->
-                <div class="md-form">
-                    <i class="fa fa-user prefix"></i>
-                    @Html.TextBoxFor(m => m.UserName, new {@class = "form-control", pattern = "[0-9]*", autocomplete = "off"})
-                    @Html.LabelFor(m => m.UserName)
-                </div>
-                @*@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })*@
-                <div class="md-form">
-                    <i class="fa fa-lock prefix"></i>
-                    @Html.PasswordFor(m => m.Password, new {@class = "form-control", autocomplete = "off"})
-                    @Html.LabelFor(m => m.Password)
-                </div>
-                @*@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })*@
-                <div class="text-xs-center">
-                    <button class="btn btn-unique">Ingresar</button>
+    <div class="login-width">
+        @using (Html.BeginForm("LoginUser", "Home", FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card" id="carg">
+                <div class="card-block">
+                    <!--Header-->
+                    <div class="text-xs-center">
+                        <h3>
+                            <i class="fa fa-lock"></i> Login
+                        </h3>
+                        <hr class="m-t-2 m-b-2">
+                    </div>
+                    <!--Body-->
+                    <div class="md-form">
+                        <i class="fa fa-user prefix"></i>
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", pattern = "[0-9]*", autocomplete = "off" })
+                        @Html.LabelFor(m => m.UserName)
+                    </div>
+                    @*@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })*@
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", autocomplete = "off" })
+                        @Html.LabelFor(m => m.Password)
+                    </div>
+                    @*@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })*@
+                    <div class="text-xs-center">
+                        <button class="btn btn-unique">Ingresar</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>

@@ -121,10 +121,10 @@
     <value>SELECT * FROM cliente WHERE v_IdCliente = @id</value>
   </data>
   <data name="GetIdClient" xml:space="preserve">
-    <value>SELECT v_IdCliente FROM cliente WHERE v_NroDocIdentificacion = @id AND v_Password=@pass</value>
+    <value>SELECT v_IdCliente FROM cliente WHERE v_NroDocIdentificacion = @id AND v_Password=@pass AND i_Eliminado=0</value>
   </data>
   <data name="GetIdVenta" xml:space="preserve">
-    <value>SELECT v_IdVenta FROM venta WHERE i_IdTipoDocumento=@tipoDoc AND  v_SerieDocumento=@serie AND v_CorrelativoDocumento=@correlativo AND t_FechaRegistro=@fecha AND d_Total=@total</value>
+    <value>SELECT v_IdVenta FROM venta WHERE i_IdTipoDocumento=@tipoDoc AND  v_SerieDocumento=@serie AND v_CorrelativoDocumento=@correlativo AND t_FechaRegistro=@fecha AND d_Total=@total AND i_Eliminado = 0</value>
   </data>
   <data name="GetIscFromDetail" xml:space="preserve">
     <value>SELECT i.d_Monto, i.d_Porcentaje, i.i_IdSistemaIsc FROM productodetalle p
@@ -132,7 +132,7 @@
                             WHERE p.v_IdProductoDetalle = @id  AND  i.v_Periodo = @periodo;</value>
   </data>
   <data name="GetListFromClient" xml:space="preserve">
-    <value>SELECT * FROM venta WHERE v_SerieDocumento LIKE '[FB]%' AND v_IdCliente=@id</value>
+    <value>SELECT v_IdVenta, v_SerieDocumento, v_CorrelativoDocumento,t_FechaRegistro, d_Total FROM venta WHERE v_SerieDocumento LIKE '[FB]%' AND v_IdCliente=@id AND i_Eliminado= 0</value>
   </data>
   <data name="GetLite" xml:space="preserve">
     <value>SELECT v_Ruc, v_RazonSocial, v_NombreComercial, v_Domicilio, v_Resolucion FROM configuracionfacturacion</value>
@@ -148,7 +148,7 @@
                                 WHERE v.v_IdVenta = @id</value>
   </data>
   <data name="GetVenta" xml:space="preserve">
-    <value>SELECT * FROM venta WHERE v_IdVenta=@idVenta</value>
+    <value>SELECT * FROM venta WHERE v_IdVenta=@idVenta AND i_Eliminado= 0</value>
   </data>
   <data name="GetVentaCliente" xml:space="preserve">
     <value>SELECT v.*, c.i_IdTipoIdentificacion,c.v_NroDocIdentificacion,c.v_ApePaterno,
@@ -162,6 +162,6 @@
                         LEFT OUTER JOIN datahierarchy d on v.i_IdUnidadMedida = d.i_ItemId AND d.i_GroupId = 17
                         LEFT OUTER JOIN datahierarchy d2 on d.i_ParentItemId = d2.i_ItemId AND d2.i_GroupId = @idg
                         LEFT OUTER JOIN datahierarchy d3 ON v.i_IdTipoOperacion = d3.i_ItemId AND d3.i_GroupId = 35
-                        WHERE v.v_IdVenta = @id</value>
+                        WHERE v.v_IdVenta = @id AND v.i_Eliminado=0</value>
   </data>
 </root>
