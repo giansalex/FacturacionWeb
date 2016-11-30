@@ -89,6 +89,7 @@ namespace WebBusinessLayer
             {
                 #region Filter
                 string stringParams = string.Empty;
+                if(filtros != null)
                 foreach (var item in filtros)
                 {
                     var key = "\"" + item.Key + "\"";

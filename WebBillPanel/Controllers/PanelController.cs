@@ -17,21 +17,10 @@ namespace WebBillPanel.Controllers
         {
             if (Session[HomeController.IdUser] == null) return RedirectToAction("", "Home");
             var idUser = Session[HomeController.IdUser].ToString();
-            //var vbl = new VentaBl();
+            var vbl = new VentaBl();
             //var cbl = new ClienteBl();
             //ViewBag.Cliente = cbl.GetClient(idUser);
-            //var items = vbl.GetListFromClient(idUser);
-            var items = new List<ventaDto>
-            {
-                new ventaDto
-                {
-                    v_IdVenta = "N001-21312",
-                    v_SerieDocumento = "F001",
-                    v_CorrelativoDocumento ="000000012",
-                    d_Total = 12.32M,
-                    t_FechaRegistro = new DateTime(2016, 2,1)
-                }
-            };
+            var items = vbl.SearchVentas(idUser, DateTime.Now.Date, DateTime.Now.Date, null);
             return View(items);
         }
 

@@ -5,7 +5,8 @@ var validateFecha = function () {
     var init = $("input[name=finit1]").val();
     var end = $("input[name=fend1]").val();
     if (init == '' || end == '') {
-        alert('Elegir rango de Fechas');
+        $('#alertMsg').text('Elegir rango de Fechas');
+        $('#alertModal').modal('show');
         return false;
     }
     return true;
@@ -25,17 +26,11 @@ var busqueda = function () {
         data: filtro,
         method: "POST",
         error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError);
+            $('#alertMsg').text(thrownError);
+            $('#alertModal').modal('show');
         }
     }).done(function (data) {
         $('#tableContent').html(data);
-        //$('#myTable').DataTable({
-        //    responsive: true,
-        //    bProcessing: false,
-        //    bFilter: false,
-        //    bAutoWidth: false,
-        //    bLengthChange: false
-        //});
     });
     return false;
 };
