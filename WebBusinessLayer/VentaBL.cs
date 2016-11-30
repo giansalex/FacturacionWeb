@@ -82,5 +82,32 @@ namespace WebBusinessLayer
                 return null;
             }
         }
+
+        public IEnumerable<ventaDto> SearchVentas(string idCliente, DateTime init, DateTime end, IDictionary<string, string> filtros)
+        {
+            try
+            {
+                #region Filter
+                string stringParams = string.Empty;
+                foreach (var item in filtros)
+                {
+                    var key = "\"" + item.Key + "\"";
+                    stringParams += " AND " + key + "=" + item.Value;
+                }
+                #endregion
+
+                using (var dbContext = DbWeb.GetConection())
+                {
+                    var res = dbContext.Query<ventaDto>(QueryHelper.GetQuery(nameof(SearchVentas)) + stringParams, new { id = idCliente, init, end});
+                    LastResult.Success = true;
+                    return res.ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+                LastResult.ErrorMessage = ex.Message;
+                return null;
+            }
+        }
     }
 }

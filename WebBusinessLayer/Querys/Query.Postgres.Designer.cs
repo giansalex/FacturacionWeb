@@ -165,5 +165,14 @@ namespace WebBusinessLayer.Querys {
                 return ResourceManager.GetString("GetVentaDetalles", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a SELECT &quot;v_IdVenta&quot;, &quot;i_IdTipoDocumento&quot;, &quot;v_SerieDocumento&quot;, &quot;v_CorrelativoDocumento&quot;, &quot;t_FechaRegistro&quot;, &quot;d_Total&quot; FROM venta where &quot;t_FechaRegistro&quot; &gt;= @init AND &quot;t_FechaRegistro&quot; &lt;= @end AND &quot;i_Eliminado&quot; = 0 AND &quot;v_IdCliente&quot; =  @id.
+        /// </summary>
+        internal static string SearchVentas {
+            get {
+                return ResourceManager.GetString("SearchVentas", resourceCulture);
+            }
+        }
     }
 }

@@ -134,25 +134,25 @@ namespace WebBillPanel.Controllers
         [HttpPost]
         public ActionResult Search([Bind(Include = "TipoDocumento,Serie,Correlativo,FechaInicial,FechaFinal")] FilterDoc filter)
         {
-            var items = new List<ventaDto>
+            if (Session[HomeController.IdUser] == null) return RedirectToAction("", "Home");
+            var idUser = Session[HomeController.IdUser].ToString();
+
+            var filters = new Dictionary<string, string>();
+            if(filter.TipoDocumento > 0)
+                filters.Add("i_IdTipoDocumento", filter.TipoDocumento.ToString());
+
+            if (!string.IsNullOrEmpty(filter.Serie))
+                filters.Add("v_SerieDocumento", $"'{filter.Serie}'");
+
+            if (!string.IsNullOrEmpty(filter.Correlativo))
+                filters.Add("v_CorrelativoDocumento", $"'{filter.Correlativo}'");
+
+            var bl = new VentaBl();
+            var items = bl.SearchVentas(idUser, filter.FechaInicial, filter.FechaFinal, filters);
+            if (!bl.LastResult.Success)
             {
-                new ventaDto
-                {
-                    v_IdVenta = "N001-21312",
-                    v_SerieDocumento = "F001",
-                    v_CorrelativoDocumento ="000000012",
-                    d_Total = 12.32M,
-                    t_FechaRegistro = new DateTime(2016, 2,1)
-                },
-                new ventaDto
-                {
-                    v_IdVenta = "N001-6432",
-                    v_SerieDocumento = "F002",
-                    v_CorrelativoDocumento ="954646",
-                    d_Total = 12.32M,
-                    t_FechaRegistro = new DateTime(2016, 2,1)
-                }
-            };
+                return HttpNotFound(bl.LastResult.ErrorMessage);
+            }
             return View(items);
         }
         private bool IsNotValidSession()

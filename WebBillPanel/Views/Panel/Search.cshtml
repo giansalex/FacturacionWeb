@@ -4,41 +4,28 @@
     Layout = null;
     int count = 0;
 }
-<table class="display responsive nowrap" id="myTable">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Doc</th>
-            <th>Fecha</th>
-            <th>Total</th>
-            <th>PDF</th>
-            <th>XML</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-            {
-            <tr>
-                <th scope="row">@(++count)</th>
-                <td>@item.v_SerieDocumento - @item.v_CorrelativoDocumento</td>
-                <td>@item.t_FechaRegistro.Value.ToShortDateString()</td>
-                <td>@(item.i_IdMoneda == 1 ? "S/." : "$") @item.d_Total</td>
-                <td>
-                    @{
-                        var id = Encryptor.Encode(item.v_IdVenta);
-                    }
-                    <button type="button" class="btn btn-sm btn-primary red" data-toggle="tooltip" data-placement="top" title="Descargar PDF"
-                            onclick="location.href = '@Url.Action("gen-pdf", "Panel", new {id})'">
-                        <i class="fa fa-file-pdf-o"></i>
-                    </button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-primary green" data-toggle="tooltip" data-placement="top" title="Descargar XML"
-                            onclick="location.href ='@Url.Action("gen-xml", "Panel", new {id})'">
-                        <i class="fa fa-file-excel-o"></i>
-                    </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+@foreach (var item in Model)
+    {
+    <tr>
+        <th scope="row">@(++count)</th>
+        <td>@item.v_SerieDocumento - @item.v_CorrelativoDocumento</td>
+        <td>@item.t_FechaRegistro.Value.ToShortDateString()</td>
+        <td>@(item.i_IdMoneda == 1 ? "S/." : "$") @item.d_Total</td>
+        <td>
+            @{
+                var id = Encryptor.Encode(item.v_IdVenta);
+            }
+            <button type="button" class="btn btn-sm btn-primary red" data-toggle="tooltip" data-placement="top" title="Descargar PDF"
+                    onclick="location.href = '@Url.Action("gen-pdf", "Panel", new {id})'">
+                <i class="fa fa-file-pdf-o"></i>
+            </button>
+        </td>
+        <td>
+            <button type="button" class="btn btn-sm btn-primary green" data-toggle="tooltip" data-placement="top" title="Descargar XML"
+                    onclick="location.href ='@Url.Action("gen-xml", "Panel", new {id})'">
+                <i class="fa fa-file-excel-o"></i>
+            </button>
+        </td>
+    </tr>
+}

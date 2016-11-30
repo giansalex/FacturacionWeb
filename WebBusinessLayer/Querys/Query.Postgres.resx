@@ -164,4 +164,7 @@ LEFT OUTER JOIN datahierarchy d2 on d."i_ParentItemId" = d2."i_ItemId" AND d2."i
 LEFT OUTER JOIN datahierarchy d3 ON v."i_IdTipoOperacion" = d3."i_ItemId" AND d3."i_GroupId" = 35
 WHERE v."v_IdVenta" = @id AND v."i_Eliminado"=0</value>
   </data>
+  <data name="SearchVentas" xml:space="preserve">
+    <value>SELECT "v_IdVenta", "i_IdTipoDocumento", "v_SerieDocumento", "v_CorrelativoDocumento", "t_FechaRegistro", "d_Total" FROM venta where "t_FechaRegistro" &gt;= @init AND "t_FechaRegistro" &lt;= @end AND "i_Eliminado" = 0 AND "v_IdCliente" =  @id</value>
+  </data>
 </root>

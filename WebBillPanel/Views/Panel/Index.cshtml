@@ -3,7 +3,6 @@
 @model IEnumerable<ventaDto>
 @{
     ViewBag.Title = "Panel";
-    int count = 0;
 }
 @section Styles
 {
@@ -23,70 +22,7 @@
 {
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js"></script>
-    <script>
-        $(function() {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-        var validateFecha = function () {
-            var init = $("input[name=finit1]").val();
-            var end = $("input[name=fend1]").val();
-            if (init == '' || end == '') {
-                alert('Elegir rango de Fechas');
-                return false;
-            }
-            return true;
-        };
-        var busqueda = function () {
-            if (!validateFecha()) return false;
-            var filtro = {
-                TipoDocumento: $('#mdb-select').val(),
-                Serie: $('#serie').val(),
-                Correlavito: $('#correlativo').val(),
-                FechaInicial: $("input[name=finit1]").val(),
-                FechaFinal: $("input[name=fend1]").val()
-            };
-            var url = "@Url.Action("Search", "Panel")";
-            console.log(filtro);
-            $.ajax(url, {
-                data: filtro,
-                method: "POST",
-                error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(thrownError);
-                }
-            }).done(function (data) {
-                //console.log(data);
-                $('#result').replaceWith(data);
-                $('#myTable').DataTable({
-                    responsive: true,
-                    bProcessing: false,
-                    bFilter: false,
-                    bAutoWidth: false,
-                    bLengthChange: false
-                });
-            });
-            return false;
-        };
-
-        $(document).ready(function(){
-            $('#myTable').DataTable({
-                responsive: true,
-                bProcessing: false,
-                bFilter: false,
-                bAutoWidth: false,
-                bLengthChange : false
-            });
-            $('#finit').pickadate({
-                formatSubmit: 'dd/mm/yyyy',
-                hiddenSuffix: '1'
-            });
-            $('#fend').pickadate({
-                formatSubmit: 'dd/mm/yyyy',
-                hiddenSuffix: '1'
-            });
-            $('#mdb-select').material_select();
-            $('#formSearch').submit(busqueda);
-        });
-    </script>
+    <script src="~/Scripts/search.js"></script>
 }
 <br/>
 <p>
@@ -133,6 +69,20 @@
 
 <div class="row" style="min-height:25rem">
     <div class="col-md-8 offset-md-2" id="result">
-        @Html.Partial("Search", Model)
+        <table class="display responsive nowrap" id="myTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Doc</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>PDF</th>
+                    <th>XML</th>
+                </tr>
+            </thead>
+            <tbody id="tableContent">
+                @Html.Partial("Search", Model)
+            </tbody>
+        </table>
     </div>
 </div>
