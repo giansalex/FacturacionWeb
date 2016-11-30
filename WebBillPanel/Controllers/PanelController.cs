@@ -80,8 +80,7 @@ namespace WebBillPanel.Controllers
             {
                 var idVenta = Encryptor.Decode(id);
                 var content = new RepFacturacionElectronica().GenerarPdf(idVenta);
-                if (content != null)
-                    return File(content.Item2, System.Net.Mime.MediaTypeNames.Application.Pdf, content.Item1);
+                return File(content.Item2, System.Net.Mime.MediaTypeNames.Application.Pdf, content.Item1);
             }
             catch (Exception er)
             {

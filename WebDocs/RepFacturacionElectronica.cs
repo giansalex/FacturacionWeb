@@ -35,7 +35,7 @@ namespace WebDocs
             var config = bl.Get();
             if (!bl.LastResult.Success)
             {
-                return null;
+                throw new Exception("No se pudo cargar la configuracion, " + bl.LastResult.ErrorMessage);
             }
             ds1.Tables.Add(GetDataEmpresa("EmpresaInfo",
                 new KeyValuePair<string, object>("Logo", config.b_Logo),
@@ -50,21 +50,14 @@ namespace WebDocs
             rp.SetParameterValue("PaginaWeb", config.v_Web ?? "");
             rp.SetParameterValue("Resolucion", config.v_Resolucion ?? "");
             rp.SetParameterValue("RucEmpresa", "RUC: " + config.v_Ruc);
-            try
-            {
-                using (var st = rp.ExportToStream(ExportFormatType.PortableDocFormat))
-                {
-                    var arr = new byte[st.Length];
-                    st.Read(arr, 0, arr.Length);
-                    return new Tuple<string, byte[]>(objVenta.Documento + ".pdf", arr);
-                }
-                //rp.ExportToDisk(ExportFormatType.PortableDocFormat, path);
-            }
-            catch
-            {
-                return null;
-            }
 
+            using (var st = rp.ExportToStream(ExportFormatType.PortableDocFormat))
+            {
+                var arr = new byte[st.Length];
+                st.Read(arr, 0, arr.Length);
+                return new Tuple<string, byte[]>(objVenta.Documento + ".pdf", arr);
+            }
+                //rp.ExportToDisk(ExportFormatType.PortableDocFormat, path);
         }
 
         private DataTable GetDataEmpresa(string nameTable, params KeyValuePair<string, object>[] bmps)
