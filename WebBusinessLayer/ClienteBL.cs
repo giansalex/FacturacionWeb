@@ -7,8 +7,18 @@ using WebDataModel.Entities;
 namespace WebBusinessLayer
 {
     using Querys;
+    /// <summary>
+    /// Class ClienteBl.
+    /// </summary>
+    /// <seealso cref="WebBusinessLayer.BaseBl" />
     public class ClienteBl : BaseBl
     {
+        /// <summary>
+        /// Gets the identifier client.
+        /// </summary>
+        /// <param name="pstrDocumento">The PSTR documento.</param>
+        /// <param name="pstrClave">The PSTR clave.</param>
+        /// <returns>System.String.</returns>
         public string GetIdClient(string pstrDocumento, string pstrClave)
         {
             try
@@ -28,6 +38,11 @@ namespace WebBusinessLayer
             }
         }
 
+        /// <summary>
+        /// Gets the client.
+        /// </summary>
+        /// <param name="pstrId">The PSTR identifier.</param>
+        /// <returns>clienteDto.</returns>
         public clienteDto GetClient(string pstrId)
         {
             try

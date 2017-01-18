@@ -83,6 +83,14 @@ namespace WebBusinessLayer
             }
         }
 
+        /// <summary>
+        /// Busqueda de las ventas segun filtro.
+        /// </summary>
+        /// <param name="idCliente">The identifier cliente.</param>
+        /// <param name="init">The initialize.</param>
+        /// <param name="end">The end.</param>
+        /// <param name="filtros">The filtros.</param>
+        /// <returns>IEnumerable&lt;ventaDto&gt;.</returns>
         public IEnumerable<ventaDto> SearchVentas(string idCliente, DateTime init, DateTime end, IDictionary<string, string> filtros)
         {
             try

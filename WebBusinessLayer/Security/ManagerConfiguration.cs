@@ -36,12 +36,6 @@ namespace WebBusinessLayer.Security
             conect.ProviderName = typeDb.ToString();
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("connectionStrings");
-            //config["TipoDb"] = typeDb.ToString();
-            //config["StrConection"] = conectionString;
-            //config.Settings["TipoDb"].Value = typeDb.ToString();
-            //config.AppSettings.Settings["StrConection"].Value = conectionString;
-            //config.Save(ConfigurationSaveMode.Modified);
-            //ConfigurationManager.AppSettings[""] = "Hola";
         }
     }
 }

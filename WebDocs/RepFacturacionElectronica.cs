@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using CrystalDecisions.Shared;
 using WebBusinessLayer;
 using WebBusinessLayer.Report;

@@ -7,6 +7,11 @@ namespace WebDocs.Utils
 {
     public static class Utils
     {
+        /// <summary>
+        /// Convertirens the letras.
+        /// </summary>
+        /// <param name="nro">The nro.</param>
+        /// <returns>System.String.</returns>
         public static string ConvertirenLetras(decimal nro)
         {
             string dec;
@@ -181,6 +186,12 @@ namespace WebDocs.Utils
             return Num2Text;
         }
 
+        /// <summary>
+        /// Converts to datatable.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data">The data.</param>
+        /// <returns>DataTable.</returns>
         public static DataTable ConvertToDatatable<T>(List<T> data)
         {
             var table = new DataTable();

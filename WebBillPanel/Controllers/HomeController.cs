@@ -11,18 +11,35 @@ namespace WebBillPanel.Controllers
     public class HomeController : Controller
     {
         #region Fields
+        /// <summary>
+        /// The identifier user
+        /// </summary>
         public const string IdUser = "_idUser__";
+        /// <summary>
+        /// The identifier document
+        /// </summary>
         public const string IdDoc = "_idVenta__";
+        /// <summary>
+        /// The identifier admin
+        /// </summary>
         public const string IdAdmin = "_idAdmin__";
         #endregion
 
         #region Methods Controller
         // GET: Home
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns>ActionResult.</returns>
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Admins this instance.
+        /// </summary>
+        /// <returns>ActionResult.</returns>
         public ActionResult Admin()
         {
             return View();

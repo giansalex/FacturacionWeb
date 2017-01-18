@@ -68,6 +68,16 @@ namespace WebDocs.Utils
             return plaintext;
         }
 
+        /// <summary>
+        /// Reads the byte array.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns>System.Byte[].</returns>
+        /// <exception cref="System.SystemException">
+        /// La contraseña brindada no se puede leer.
+        /// or
+        /// Did not read byte array properly
+        /// </exception>
         private static byte[] ReadByteArray(Stream s)
         {
             byte[] rawLength = new byte[sizeof(int)];
