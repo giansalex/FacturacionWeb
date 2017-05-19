@@ -5,7 +5,6 @@ using WebBusinessLayer;
 using WebBusinessLayer.Security;
 using System.Collections.Generic;
 using WebDocs;
-using WebDataModel.Entities;
 using WebBillPanel.Models;
 
 namespace WebBillPanel.Controllers
